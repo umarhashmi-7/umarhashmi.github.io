@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Mohd Umar Hashmi — Android Developer & AI Integrator</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@300;400;500;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+/* ================================================================
+   PROFESSIONAL DUAL THEME SYSTEM
+   Every single color uses CSS variables — no hardcoded rgba
+   Dark:  Rich amber/brown nebula — cinematic, premium
+   Light: Clean ivory/cream — editorial, professional
+================================================================ */
+
+/* ── DARK THEME ── */
+[data-theme="dark"] {
+  --bg:         #0a0600;
+  --bg-alt:     #120c02;
+  --bg-card:    rgba(255,255,255,0.03);
+  --bg-card-h:  rgba(255,255,255,0.06);
+  --bg-input:   rgba(0,0,0,0.4);
+  --bg-ticker:  rgba(8,5,0,0.92);
+  --bg-nav:     rgba(10,6,0,0.88);
+  --bg-overlay: rgba(10,6,0,0.88);
+  --bg-section: rgba(10,6,0,0.82);
+  --bg-section2:rgba(16,10,1,0.88);
+  --bg-footer:  rgba(6,3,0,0.99);
+  --bg-term:    rgba(5,3,0,0.92);
+
+  --a1:   #E8923A;   /* primary amber */
+  --a2:   #C85A1A;   /* burnt orange */
+  --a3:   #F5C040;   /* gold */
+  --a4:   #D97020;   /* mid amber */
+
+  --tx:   #F2E4CC;   /* main text */
+  --tx2:  #C8A478;   /* secondary */
+  --tx3:  #8A6440;   /* muted */
+  --tx4:  #6A4828;   /* very muted */
+
+  --bd:   rgba(232,146,58,0.15);   /* border */
+  --bdh:  rgba(232,146,58,0.45);   /* border hover */
+  --bd2:  rgba(245,192,64,0.12);
+
+  --gl:   rgba(232,146,58,0.05);   /* glass bg */
+  --glh:  rgba(232,146,58,0.09);
+
+  --sh:   rgba(232,146,58,0.18);   /* shadow */
+  --sh2:  rgba(200,90,26,0.25);
+
+  --pill-c: rgba(232,146,58,0.08);
+  --pill-g: rgba(245,192,64,0.07);
+  --pill-a: rgba(200,90,26,0.07);
+  --pill-p: rgba(180,120,60,0.07);
+
+  --btn-fg: #1a0a00;
+  --invert: 0;
+  --shader-op: 1;
+  --three-op: 0.65;
+  --section-line: rgba(232,146,58,0.08);
+  --scan-color: rgba(232,146,58,0.15);
+}
+
+/* ── LIGHT THEME — completely different aesthetic ── */
+[data-theme="light"] {
+  --bg:         #FDFAF5;
+  --bg-alt:     #F5EFE3;
+  --bg-card:    rgba(255,255,255,0.85);
+  --bg-card-h:  rgba(255,255,255,1);
+  --bg-input:   rgba(255,255,255,0.9);
+  --bg-ticker:  rgba(245,240,230,0.97);
+  --bg-nav:     rgba(253,250,245,0.92);
+  --bg-overlay: rgba(253,250,245,0.85);
+  --bg-section: rgba(253,250,245,0.92);
+  --bg-section2:rgba(245,240,230,0.9);
+  --bg-footer:  rgba(240,233,220,0.99);
+  --bg-term:    rgba(255,255,255,0.95);
+
+  --a1:   #B84A0E;   /* rust red */
+  --a2:   #8B3008;   /* dark rust */
+  --a3:   #C87010;   /* warm amber */
+  --a4:   #A05010;
+
+  --tx:   #1C1008;   /* near black warm */
+  --tx2:  #5A3018;   /* dark brown */
+  --tx3:  #9A6030;   /* medium brown */
+  --tx4:  #C89060;
+
+  --bd:   rgba(184,74,14,0.14);
+  --bdh:  rgba(184,74,14,0.45);
+  --bd2:  rgba(200,112,16,0.12);
+
+  --gl:   rgba(184,74,14,0.05);
+  --glh:  rgba(184,74,14,0.1);
+
+  --sh:   rgba(184,74,14,0.12);
+  --sh2:  rgba(139,48,8,0.18);
+
+  --pill-c: rgba(184,74,14,0.07);
+  --pill-g: rgba(200,112,16,0.07);
+  --pill-a: rgba(139,48,8,0.07);
+  --pill-p: rgba(160,80,16,0.07);
+
+  --btn-fg: #FDFAF5;
+  --invert: 1;
+  --shader-op: 0.08;
+  --three-op: 0.18;
+  --section-line: rgba(184,74,14,0.1);
+  --scan-color: rgba(184,74,14,0.12);
+}
+
+/* ================================================================
+   BASE RESET & CORE
+================================================================ */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  background: var(--bg);
+  color: var(--tx);
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+  transition: background 0.5s ease, color 0.4s ease;
+}
+/* Subtle texture */
+body::before {
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
+  background-image:
+    repeating-linear-gradient(45deg, rgba(200,100,20,.006) 0, rgba(200,100,20,.006) 1px, transparent 0, transparent 50%),
+    repeating-linear-gradient(-45deg, rgba(200,100,20,.006) 0, rgba(200,100,20,.006) 1px, transparent 0, transparent 50%);
+  background-size: 12px 12px;
+}
+/* Shader canvas — behind everything */
+#shader-bg {
+  position:fixed; inset:0; z-index:-2; pointer-events:none;
+  opacity: var(--shader-op);
+  transition: opacity 0.5s ease;
+}
+/* Three.js canvas */
+#bgc {
+  position:fixed; inset:0; z-index:-1; pointer-events:none;
+  opacity: var(--three-op);
+  transition: opacity 0.5s ease;
+}
+
+/* ── CURSOR ── */
+@media(min-width:769px){ html, body, body * { cursor:none !important; } }
+#cur-dot {
+  position:fixed; width:10px; height:10px; border-radius:50%;
+  background:var(--a1); box-shadow:0 0 14px var(--a1), 0 0 28px rgba(232,146,58,.3);
+  pointer-events:none; z-index:2147483647;
+  top:0; left:0; margin:-5px 0 0 -5px;
+  transition:width .12s, height .12s, background .3s, box-shadow .3s;
+  will-change:transform;
+}
+#cur-ring {
+  position:fixed; width:38px; height:38px; border-radius:50%;
+  border:2px solid rgba(232,146,58,.5);
+  pointer-events:none; z-index:2147483646;
+  top:0; left:0; margin:-19px 0 0 -19px;
+  transition:width .3s cubic-bezier(.16,1,.3,1), height .3s cubic-bezier(.16,1,.3,1), border-color .3s;
+  will-change:transform;
+}
+#cur-trail {
+  position:fixed; width:22px; height:22px; border-radius:50%;
+  background:rgba(232,146,58,.18); filter:blur(4px);
+  pointer-events:none; z-index:2147483645;
+  top:0; left:0; margin:-11px 0 0 -11px;
+  will-change:transform;
+}
+body.cur-hover #cur-dot { width:7px; height:7px; margin:-3.5px 0 0 -3.5px; background:var(--a3); }
+body.cur-hover #cur-ring { width:54px; height:54px; margin:-27px 0 0 -27px; border-color:rgba(232,146,58,.85); }
+body.cur-click #cur-dot { width:5px; height:5px; }
+body.cur-click #cur-ring { width:26px; height:26px; margin:-13px 0 0 -13px; }
+[data-theme="light"] #cur-dot { background:var(--a1); box-shadow:0 0 14px var(--a1),0 0 28px rgba(184,74,14,.2); }
+[data-theme="light"] #cur-ring { border-color:rgba(184,74,14,.45); }
+@media(max-width:768px){ #cur-dot,#cur-ring,#cur-trail { display:none; } }
+
+/* ── PROGRESS BAR ── */
+#pb {
+  position:fixed; top:0; left:0; height:3px; width:0%; z-index:9999;
+  background:linear-gradient(90deg, var(--a2), var(--a1), var(--a3));
+  box-shadow:0 0 8px var(--a1);
+  transition:width .08s;
+}
+
+/* ── SCAN LINE ── */
+.scan-line {
+  position:fixed; left:0; right:0; height:1px;
+  background:linear-gradient(90deg, transparent, var(--scan-color), transparent);
+  pointer-events:none; z-index:9990;
+  animation:scan 9s linear infinite;
+}
+@keyframes scan { 0%{top:-1px;} 100%{top:100vh;} }
+
+/* ── LOADER ── */
+#loader {
+  position:fixed; inset:0; background:var(--bg); z-index:9000;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:24px;
+  animation:loaderOut .5s ease forwards 2.5s;
+  transition:background .3s;
+}
+@keyframes loaderOut { to{opacity:0;pointer-events:none;visibility:hidden;} }
+#ld-phrase {
+  font-family:'Share Tech Mono',monospace; font-size:clamp(1rem,3vw,1.6rem);
+  color:var(--a1); letter-spacing:.2em; min-height:2rem; text-align:center;
+  text-shadow:0 0 20px rgba(232,146,58,.4);
+}
+#ld-bar { width:200px; height:2px; background:var(--bd); border-radius:2px; }
+#ld-fill {
+  height:100%; background:linear-gradient(90deg,var(--a2),var(--a1),var(--a3));
+  border-radius:2px; width:0%; animation:ldfill 2.3s ease forwards; box-shadow:0 0 6px var(--a1);
+}
+@keyframes ldfill{to{width:100%;}}
+
+/* ── TICKER ── */
+#ticker {
+  position:fixed; top:0; left:0; right:0; height:26px;
+  background:var(--bg-ticker);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--bd);
+  z-index:8000; overflow:hidden; display:flex; align-items:center;
+  transition:background .4s, border-color .4s;
+}
+.tkin { display:flex; white-space:nowrap; animation:tks 32s linear infinite; }
+.tkin span { font-family:'Share Tech Mono',monospace; font-size:.56rem; letter-spacing:.15em; color:var(--tx3); padding:0 26px; }
+.tc{color:var(--a1)!important;} .tg{color:var(--a3)!important;} .ta{color:var(--a2)!important;}
+@keyframes tks{0%{transform:translateX(100vw);}100%{transform:translateX(-100%);}}
+
+/* ── NAV ── */
+#nav {
+  position:fixed; top:26px; left:0; right:0; z-index:7000;
+  padding:0 5%; height:62px; display:flex; align-items:center; justify-content:space-between;
+  transition:transform .4s cubic-bezier(.16,1,.3,1), background .4s, backdrop-filter .3s, border-color .4s;
+}
+#nav.scrolled {
+  background:var(--bg-nav);
+  backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--bd);
+}
+.nlogo {
+  font-family:'Share Tech Mono',monospace; font-size:1.4rem; color:var(--a1);
+  text-decoration:none; display:flex; align-items:center; gap:9px; letter-spacing:.04em;
+  text-shadow:0 0 14px rgba(232,146,58,.5);
+}
+.nled {
+  width:9px; height:9px; background:var(--a3); border-radius:50%;
+  animation:ledp 2s ease-in-out infinite; box-shadow:0 0 8px var(--a3);
+}
+@keyframes ledp{0%,100%{opacity:1;}50%{opacity:.35;}}
+.nlinks { display:flex; align-items:center; gap:26px; list-style:none; }
+.nlinks a {
+  font-size:.73rem; font-weight:500; letter-spacing:.12em; color:var(--tx3);
+  text-decoration:none; text-transform:uppercase; transition:color .2s; position:relative;
+}
+.nlinks a::after {
+  content:''; position:absolute; bottom:-3px; left:0; right:0;
+  height:1px; background:var(--a1); transform:scaleX(0); transition:transform .25s;
+}
+.nlinks a:hover { color:var(--a1); }
+.nlinks a:hover::after { transform:scaleX(1); }
+.nbtn {
+  font-family:'Share Tech Mono',monospace; font-size:.7rem; letter-spacing:.1em; padding:8px 20px;
+  background:linear-gradient(135deg,var(--a1),var(--a3)); color:var(--btn-fg);
+  border:none; border-radius:3px; text-decoration:none; font-weight:700; transition:all .2s;
+}
+.nbtn:hover { box-shadow:0 0 22px rgba(232,146,58,.4); transform:translateY(-1px); }
+
+/* THEME TOGGLE — professional pill */
+.theme-pill {
+  display:flex; align-items:center; gap:8px; padding:6px 12px;
+  background:var(--gl); border:1px solid var(--bd); border-radius:20px;
+  cursor:none; transition:all .3s; flex-shrink:0;
+  font-family:'Share Tech Mono',monospace; font-size:.65rem; letter-spacing:.08em; color:var(--tx3);
+}
+.theme-pill:hover { background:var(--glh); border-color:var(--bdh); color:var(--a1); }
+.theme-pill-icon { font-size:.85rem; transition:transform .4s; }
+.theme-pill:hover .theme-pill-icon { transform:rotate(20deg); }
+.theme-pill-label { transition:opacity .2s; }
+
+/* Mobile nav */
+#ham { display:none; flex-direction:column; gap:5px; background:none; border:none; padding:4px; }
+#ham span { width:22px; height:2px; background:var(--a1); border-radius:2px; display:block; transition:all .3s; }
+#mnav {
+  display:none; position:fixed; top:88px; left:0; right:0;
+  background:var(--bg-nav); backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--bd); padding:22px 5%;
+  flex-direction:column; gap:16px; z-index:6999;
+  transition:background .4s;
+}
+#mnav a { color:var(--tx3); text-decoration:none; font-size:.9rem; letter-spacing:.1em; text-transform:uppercase; transition:color .2s; }
+#mnav a:hover { color:var(--a1); }
+
+/* ── SECTION DOTS ── */
+.sec-dots {
+  position:fixed; right:22px; top:50%; transform:translateY(-50%);
+  display:flex; flex-direction:column; gap:10px; z-index:5000;
+}
+.sd {
+  width:6px; height:6px; border-radius:50%;
+  background:var(--bd); border:1px solid var(--bd);
+  transition:all .3s; cursor:none;
+}
+.sd.on {
+  background:var(--a1); border-color:var(--a1);
+  box-shadow:0 0 8px var(--a1); width:8px; height:8px;
+}
+@media(max-width:768px){.sec-dots{display:none;}}
+
+/* ── LAYOUT UTILITIES ── */
+section { position:relative; z-index:1; background:var(--bg-section); transition:background .4s; }
+section:nth-child(even) { background:var(--bg-section2); }
+section::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:1px;
+  background:linear-gradient(90deg, transparent, var(--section-line), transparent); z-index:2;
+}
+.sw { padding:100px 5%; max-width:1280px; margin:0 auto; }
+.slabel {
+  font-family:'Share Tech Mono',monospace; font-size:.62rem; letter-spacing:.3em;
+  color:var(--a1); opacity:.9; margin-bottom:12px; text-transform:uppercase;
+}
+.stitle {
+  font-family:'Syne',sans-serif; font-weight:800;
+  font-size:clamp(2rem,4.5vw,3.4rem); line-height:1.05; letter-spacing:-.02em;
+  margin-bottom:14px; color:var(--tx);
+}
+.ssub { font-size:.92rem; color:var(--tx2); line-height:1.75; max-width:520px; }
+
+/* Ghost BG text */
+.jesko-bg-text {
+  position:absolute; font-family:'Syne',sans-serif; font-weight:800;
+  font-size:clamp(5rem,16vw,15rem); line-height:1; letter-spacing:-.06em;
+  color:var(--bd); pointer-events:none; user-select:none;
+  z-index:0; right:0; top:50%; transform:translateY(-50%); white-space:nowrap;
+  will-change:transform; opacity:.5;
+}
+
+/* Reveals */
+.rv { opacity:1; transform:translateY(0); transition:opacity .75s ease, transform .75s cubic-bezier(.22,1,.36,1); }
+.rv.anim { opacity:0; transform:translateY(32px); }
+.rv.anim.in { opacity:1; transform:translateY(0); }
+.d1{transition-delay:.08s;} .d2{transition-delay:.16s;} .d3{transition-delay:.24s;} .d4{transition-delay:.32s;}
+.wr span { display:inline-block; transition:transform .9s cubic-bezier(.16,1,.3,1), opacity .7s ease, filter .7s ease; }
+.wr.anim span { transform:translateY(110%); opacity:0; filter:blur(6px); }
+.wr.anim.on span { transform:translateY(0); opacity:1; filter:blur(0); }
+.wr span:nth-child(2){transition-delay:.1s;} .wr span:nth-child(3){transition-delay:.2s;}
+.ze { opacity:1; transform:scale(1); transition:opacity .9s ease, transform 1.1s cubic-bezier(.16,1,.3,1); }
+.ze.anim { opacity:0; transform:scale(0.94); }
+.ze.anim.in { opacity:1; transform:scale(1); }
+
+/* ── BUTTONS ── */
+.bp {
+  background:linear-gradient(135deg,var(--a1),var(--a3)); color:var(--btn-fg);
+  font-family:'Share Tech Mono',monospace; font-size:.75rem; letter-spacing:.1em; font-weight:700;
+  padding:12px 26px; border:none; border-radius:4px; text-decoration:none;
+  display:inline-flex; align-items:center; gap:7px; transition:all .22s;
+}
+.bp:hover { transform:translateY(-2px); box-shadow:0 8px 28px var(--sh); }
+.bp:active { transform:translateY(1px); }
+.bg2 {
+  border:1.5px solid var(--bd); color:var(--a1); background:var(--gl);
+  font-family:'Share Tech Mono',monospace; font-size:.75rem; letter-spacing:.1em;
+  padding:12px 26px; border-radius:4px; text-decoration:none;
+  display:inline-flex; align-items:center; gap:7px; transition:all .22s;
+}
+.bg2:hover { background:var(--glh); border-color:var(--bdh); }
+
+/* ── HERO ── */
+#hero {
+  min-height:100vh; padding:110px 5% 60px;
+  display:flex; align-items:center; gap:48px;
+  overflow:hidden; position:relative;
+  background:transparent;
+}
+[data-theme="dark"] #hero::before {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(180deg, rgba(10,6,0,.7) 0%, rgba(10,6,0,.35) 50%, rgba(10,6,0,.85) 100%);
+  pointer-events:none; z-index:0;
+}
+[data-theme="light"] #hero::before {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(180deg, rgba(253,250,245,.85) 0%, rgba(253,250,245,.55) 50%, rgba(253,250,245,.9) 100%);
+  pointer-events:none; z-index:0;
+}
+.hero-zoom { position:absolute; inset:-12%; z-index:0; pointer-events:none; will-change:transform; }
+[data-theme="dark"] .hero-zoom { background:radial-gradient(ellipse at 65% 40%,rgba(232,146,58,.05) 0%,transparent 65%); }
+[data-theme="light"] .hero-zoom { background:radial-gradient(ellipse at 65% 40%,rgba(184,74,14,.04) 0%,transparent 65%); }
+.hl { flex:1; min-width:0; position:relative; z-index:1; }
+.hr { flex:0 0 auto; width:clamp(260px,32vw,420px); position:relative; z-index:1; }
+
+.hname-wrap { overflow:hidden; margin-bottom:3px; }
+.hname {
+  font-family:'Syne',sans-serif; font-weight:800;
+  font-size:clamp(3.5rem,9.5vw,9rem); line-height:.88; letter-spacing:-.03em;
+  display:block; color:var(--tx);
+  transform:translateY(110%); animation:nameUp .9s cubic-bezier(.16,1,.3,1) forwards;
+}
+.hname.c2 { color:var(--a1); animation-delay:.11s; }
+@keyframes nameUp{to{transform:translateY(0);}}
+.hrole {
+  font-family:'Share Tech Mono',monospace; font-size:clamp(.8rem,1.4vw,1rem);
+  color:var(--a1); letter-spacing:.1em; margin-top:18px; min-height:1.6rem;
+  display:flex; align-items:center; gap:6px;
+  opacity:0; animation:fadeIn .5s ease .7s forwards;
+}
+.pr { color:var(--a3); }
+.tcur {
+  display:inline-block; width:9px; height:1em; background:var(--a1);
+  animation:blink 1.1s step-end infinite; vertical-align:middle; margin-left:2px;
+}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+.hdesc {
+  margin-top:20px; font-size:clamp(.86rem,1.3vw,.98rem); line-height:1.9;
+  color:var(--tx2); max-width:500px;
+  opacity:0; animation:fadeIn .5s ease .85s forwards;
+}
+.hdesc b { color:var(--tx); font-weight:500; } .hhl { color:var(--a1); }
+.hbtns { display:flex; flex-wrap:wrap; gap:12px; margin-top:28px; opacity:0; animation:fadeIn .5s ease 1s forwards; }
+.hbadges { display:flex; flex-wrap:wrap; gap:9px; margin-top:22px; opacity:0; animation:fadeIn .5s ease 1.15s forwards; }
+.hb {
+  font-family:'Share Tech Mono',monospace; font-size:.62rem; letter-spacing:.07em;
+  padding:6px 13px; border:1px solid var(--bd); background:var(--gl);
+  border-radius:20px; color:var(--tx3);
+  animation:hbf1 3.5s ease-in-out 1.5s infinite;
+}
+.hb:nth-child(2){animation:hbf2 3.8s ease-in-out 1.9s infinite;}
+.hb:nth-child(3){animation:hbf3 4.2s ease-in-out 2.2s infinite;}
+@keyframes hbf1{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+@keyframes hbf2{0%,100%{transform:translateY(-3px);}50%{transform:translateY(5px);}}
+@keyframes hbf3{0%,100%{transform:translateY(3px);}50%{transform:translateY(-5px);}}
+@keyframes fadeIn{to{opacity:1;}}
+.scroll-hint {
+  position:absolute; bottom:28px; left:5%;
+  display:flex; align-items:center; gap:12px;
+  font-family:'Share Tech Mono',monospace; font-size:.6rem; letter-spacing:.2em;
+  color:var(--tx3); text-transform:uppercase; z-index:1;
+  opacity:0; animation:fadeIn .5s ease 1.8s forwards;
+}
+.sh-line { width:30px; height:1px; background:var(--a1); animation:shline 2s ease-in-out infinite; }
+@keyframes shline{0%,100%{width:18px;opacity:.4;}50%{width:48px;opacity:1;}}
+
+/* TERMINAL — completely theme-aware */
+.term {
+  border-radius:10px; overflow:hidden; backdrop-filter:blur(12px);
+  border:1px solid var(--bd);
+  box-shadow:0 20px 60px rgba(0,0,0,.15), 0 0 40px var(--gl);
+  opacity:0; animation:fadeIn .6s ease .9s forwards;
+  transition:background .4s, border-color .4s;
+}
+[data-theme="dark"] .term { background:rgba(5,3,0,.92); }
+[data-theme="light"] .term { background:rgba(255,255,255,.95); }
+.tbar {
+  padding:11px 14px; display:flex; align-items:center; gap:7px;
+  border-bottom:1px solid var(--bd);
+  transition:background .4s;
+}
+[data-theme="dark"] .tbar { background:rgba(255,255,255,.02); }
+[data-theme="light"] .tbar { background:rgba(184,74,14,.04); }
+.tb { width:11px; height:11px; border-radius:50%; }
+.tbr{background:#EF5350;} .tby{background:#FFB74D;} .tbg{background:#00E676;}
+.tlbl { font-family:'Share Tech Mono',monospace; font-size:.62rem; color:var(--tx3); margin-left:8px; letter-spacing:.1em; }
+.tbody { padding:20px; font-family:'Share Tech Mono',monospace; font-size:.76rem; line-height:2.2; min-height:205px; }
+.tline { display:flex; align-items:baseline; flex-wrap:wrap; margin-bottom:2px; }
+.tp{color:var(--a3);margin-right:7px;flex-shrink:0;} .tk{color:var(--a1);} .to{color:var(--tx3);} .ts2{color:var(--a2);} .tar{color:var(--a4);}
+.nowcard {
+  margin-top:14px; border-radius:6px; padding:12px 16px;
+  display:flex; align-items:center; gap:9px;
+  font-family:'Share Tech Mono',monospace; font-size:.65rem; letter-spacing:.08em;
+  color:var(--a3); border:1px solid var(--bd2);
+  transition:background .4s, border-color .4s;
+}
+[data-theme="dark"] .nowcard { background:rgba(245,192,64,.05); }
+[data-theme="light"] .nowcard { background:rgba(200,112,16,.05); }
+.ndot { width:8px; height:8px; background:var(--a3); border-radius:50%; flex-shrink:0; animation:ledp 1.5s ease-in-out infinite; }
+
+/* MARQUEE */
+.marquee-wrap {
+  overflow:hidden; padding:24px 0;
+  border-top:1px solid var(--bd); border-bottom:1px solid var(--bd);
+  background:var(--bg-card); transition:background .4s, border-color .4s;
+}
+.marquee-inner { display:flex; white-space:nowrap; animation:mq 22s linear infinite; }
+.marquee-inner span {
+  font-family:'Syne',sans-serif; font-weight:800;
+  font-size:clamp(1.1rem,2.5vw,1.8rem); color:var(--bd); padding:0 30px;
+  text-transform:uppercase; letter-spacing:.02em;
+}
+.dot { color:var(--a1)!important; opacity:.7; }
+@keyframes mq{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+
+/* SLIDE TEXT (Jesko Jets) */
+.slide-wrap {
+  overflow:hidden; padding:60px 5%; position:relative; z-index:2;
+  border-top:1px solid var(--bd); border-bottom:1px solid var(--bd);
+  background:var(--bg-overlay); transition:background .4s, border-color .4s;
+}
+.slide-l {
+  font-family:'Syne',sans-serif; font-weight:800; font-size:clamp(3rem,7vw,6.5rem);
+  line-height:1; letter-spacing:-.03em; color:var(--tx); display:block; will-change:transform;
+}
+.slide-r {
+  font-family:'Syne',sans-serif; font-weight:800; font-size:clamp(3rem,7vw,6.5rem);
+  line-height:1; letter-spacing:-.03em; color:var(--a1); display:block;
+  text-align:right; margin-top:8px; will-change:transform;
+}
+.slide-sub {
+  font-family:'Share Tech Mono',monospace; font-size:.76rem; letter-spacing:.18em;
+  color:var(--tx3); margin-top:18px; text-transform:uppercase;
+  opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease;
+}
+.slide-wrap.active .slide-sub { opacity:1; transform:translateY(0); }
+
+/* ── ABOUT ── */
+.agrid { display:grid; grid-template-columns:1.1fr 1fr; gap:72px; align-items:start; }
+.abio { font-size:.93rem; line-height:1.95; color:var(--tx2); margin-bottom:32px; }
+.abio b { color:var(--tx); font-weight:500; } .agl{color:var(--a1);} .agr{color:var(--a3);}
+.ctrs { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.ctr {
+  padding:26px 20px; text-align:center;
+  background:var(--bg-card); border:1px solid var(--bd); border-radius:8px;
+  transition:all .35s; cursor:default; position:relative; overflow:hidden;
+}
+.ctr::after {
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(circle at 50% 0%, var(--gl), transparent 70%);
+  opacity:0; transition:opacity .35s;
+}
+.ctr:hover { border-color:var(--bdh); transform:translateY(-4px); box-shadow:0 12px 36px var(--sh); }
+.ctr:hover::after { opacity:1; }
+.cn { font-family:'Syne',sans-serif; font-weight:800; font-size:2.8rem; display:block; color:var(--a1); line-height:1; margin-bottom:6px; }
+.cl2 { font-family:'Share Tech Mono',monospace; font-size:.6rem; letter-spacing:.14em; color:var(--tx3); text-transform:uppercase; }
+.doms { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.dom {
+  background:var(--bg-card); border:1px solid var(--bd); border-radius:8px;
+  padding:26px 20px; text-align:center; transition:all .35s; cursor:default; position:relative; overflow:hidden;
+}
+.dom::after {
+  content:''; position:absolute; bottom:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg, transparent, var(--a1), transparent);
+  transform:scaleX(0); transition:transform .35s;
+}
+.dom:hover { border-color:var(--bdh); transform:translateY(-5px); box-shadow:0 12px 40px var(--sh); }
+.dom:hover::after { transform:scaleX(1); }
+.di{font-size:2rem;margin-bottom:10px;} .dt{font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem;color:var(--tx);}
+.ds{font-size:.72rem;color:var(--tx3);margin-top:4px;line-height:1.6;}
+
+/* ── PROJECTS ── */
+.pgrid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:44px; }
+.cfeat {
+  grid-column:1/3; border-radius:10px; padding:30px;
+  border:1px solid var(--bd); transition:all .35s; cursor:default; position:relative; overflow:hidden;
+  background:var(--bg-card);
+}
+[data-theme="dark"] .cfeat { background:linear-gradient(140deg,rgba(232,146,58,.06),rgba(200,90,26,.03)); }
+[data-theme="light"] .cfeat { background:linear-gradient(140deg,rgba(184,74,14,.05),rgba(200,112,16,.03)); }
+.cfeat::before { content:''; position:absolute; top:-100px; right:-100px; width:280px; height:280px; border-radius:50%; background:radial-gradient(circle,var(--gl),transparent 70%); pointer-events:none; }
+.cfeat:hover { border-color:var(--bdh); box-shadow:0 16px 56px var(--sh); }
+.ftag {
+  display:inline-block; font-family:'Share Tech Mono',monospace; font-size:.6rem;
+  letter-spacing:.25em; color:var(--a3); background:var(--gl);
+  border:1px solid var(--bd2); padding:4px 12px; border-radius:2px; margin-bottom:16px; text-transform:uppercase;
+}
+.fn { font-family:'Syne',sans-serif; font-weight:800; font-size:clamp(2.2rem,5vw,3.8rem); letter-spacing:-.02em; color:var(--a1); line-height:1; margin-bottom:6px; }
+.fsub { font-family:'Share Tech Mono',monospace; font-size:.76rem; color:var(--tx3); letter-spacing:.1em; text-transform:uppercase; }
+.fbody { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:20px; align-items:start; }
+.fdesc { font-size:.88rem; color:var(--tx2); line-height:1.85; }
+.fmet { display:flex; gap:16px; flex-wrap:wrap; margin-top:18px; padding-top:18px; border-top:1px solid var(--bd); }
+.fm .fmn { font-family:'Syne',sans-serif; font-weight:800; font-size:1.5rem; color:var(--a1); }
+.fm .fml { font-family:'Share Tech Mono',monospace; font-size:.58rem; color:var(--tx3); letter-spacing:.08em; text-transform:uppercase; }
+.phones { display:flex; align-items:flex-end; justify-content:center; gap:12px; }
+.ph { width:88px; border:1.5px solid var(--bd); border-radius:16px; padding:7px; box-shadow:0 16px 48px rgba(0,0,0,.2); transition:background .4s; }
+[data-theme="dark"] .ph { background:linear-gradient(180deg,#1a0e03,#0c0701); }
+[data-theme="light"] .ph { background:linear-gradient(180deg,#f8f0e8,#ede4d8); }
+.ph:nth-child(1){animation:ph1 3.5s ease-in-out infinite;}
+.ph:nth-child(2){animation:ph2 3.5s ease-in-out infinite;transform:scale(1.08);}
+.ph:nth-child(3){animation:ph3 3.5s ease-in-out infinite;}
+@keyframes ph1{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+@keyframes ph2{0%,100%{transform:scale(1.08) translateY(-5px);}50%{transform:scale(1.08) translateY(5px);}}
+@keyframes ph3{0%,100%{transform:translateY(-3px);}50%{transform:translateY(7px);}}
+.phn { width:34px; height:6px; border-radius:4px; margin:0 auto 6px; background:var(--bd); }
+.phs {
+  aspect-ratio:9/16; border-radius:9px; border:1px solid var(--bd);
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; padding:7px;
+  transition:background .4s;
+}
+[data-theme="dark"] .phs { background:linear-gradient(160deg,#150a02,#080400); }
+[data-theme="light"] .phs { background:linear-gradient(160deg,#f5ece0,#ede0cc); }
+.phb { width:72%; height:2.5px; background:linear-gradient(90deg,var(--a2),var(--a1)); border-radius:2px; }
+.phb.g { background:linear-gradient(90deg,var(--a3),var(--a1)); width:54%; }
+.phb.a { background:linear-gradient(90deg,var(--a2),var(--a3)); width:64%; }
+.pht { width:72%; height:1.5px; background:var(--bd); border-radius:1px; }
+.phl { font-family:'Share Tech Mono',monospace; font-size:.4rem; letter-spacing:.06em; color:var(--a1); opacity:.7; }
+.ph-ring { width:28px; height:28px; border:2px solid var(--bd); border-radius:50%; }
+.phtag { font-family:'Share Tech Mono',monospace; font-size:.5rem; color:var(--tx3); text-align:center; margin-top:7px; letter-spacing:.08em; text-transform:uppercase; }
+.pills { display:flex; flex-wrap:wrap; gap:6px; margin:14px 0; }
+.pill { font-family:'Share Tech Mono',monospace; font-size:.62rem; letter-spacing:.07em; padding:4px 9px; background:var(--pill-c); border:1px solid var(--bd); border-radius:3px; color:var(--a1); }
+.pill.g { background:var(--pill-g); border-color:var(--bd2); color:var(--a3); }
+.pill.a { background:var(--pill-a); color:var(--a2); }
+.pill.p { background:var(--pill-p); color:var(--a4); }
+.card {
+  background:var(--bg-card); border:1px solid var(--bd); border-radius:8px;
+  padding:24px; transition:all .3s; cursor:default; position:relative; overflow:hidden;
+}
+.card::after { content:''; position:absolute; bottom:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,var(--a1),transparent); transform:scaleX(0); transition:transform .3s; }
+.card:hover { border-color:var(--bdh); box-shadow:0 12px 40px var(--sh); transform:translateY(-4px); }
+.card:hover::after { transform:scaleX(1); }
+.ch { display:flex; align-items:center; justify-content:space-between; margin-bottom:11px; }
+.ci { font-size:1.4rem; }
+.cbg { font-family:'Share Tech Mono',monospace; font-size:.58rem; letter-spacing:.1em; padding:3px 8px; border-radius:2px; }
+.built { background:var(--pill-g); color:var(--a3); border:1px solid var(--bd2); }
+.live { background:var(--pill-c); color:var(--a1); border:1px solid var(--bd); }
+.cont { background:var(--pill-a); color:var(--a2); border:1px solid var(--bd); }
+.ct { font-family:'Syne',sans-serif; font-weight:700; font-size:.98rem; margin-bottom:7px; color:var(--tx); }
+.cd { font-size:.78rem; color:var(--tx2); line-height:1.7; margin-bottom:12px; }
+
+/* ── SKILLS ── */
+.sgrid { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:44px; }
+.sp { background:var(--bg-card); border:1px solid var(--bd); border-radius:8px; padding:28px; transition:all .3s; }
+.sp:hover { border-color:var(--bdh); }
+.sph {
+  font-family:'Share Tech Mono',monospace; font-size:.67rem; letter-spacing:.2em; color:var(--a1);
+  text-transform:uppercase; margin-bottom:22px; padding-bottom:12px; border-bottom:1px solid var(--bd);
+}
+.sk { margin-bottom:14px; }
+.skr { display:flex; justify-content:space-between; margin-bottom:6px; }
+.skn { font-size:.79rem; color:var(--tx2); } .skp { font-family:'Share Tech Mono',monospace; font-size:.68rem; color:var(--tx3); }
+.skbg { height:4px; background:var(--bd); border-radius:2px; overflow:hidden; }
+.skf { height:100%; border-radius:2px; width:0%; transition:width 1.5s cubic-bezier(.22,1,.36,1); }
+.skf.c { background:linear-gradient(90deg,var(--a2),var(--a1),var(--a3)); }
+.skf.g { background:linear-gradient(90deg,var(--a4),var(--a2),var(--a1)); }
+.skf.a { background:linear-gradient(90deg,var(--a2),var(--a3)); }
+.skf.p { background:linear-gradient(90deg,var(--a1),var(--a3)); }
+.spw{grid-column:1/-1;} .spw .sks{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+
+/* ── TIMELINE ── */
+.twrap { position:relative; margin-top:52px; }
+.twrap::before {
+  content:''; position:absolute; left:50%; top:0; bottom:0; width:1px;
+  background:linear-gradient(180deg, transparent, var(--bd) 15%, var(--bd) 85%, transparent);
+  transform:translateX(-50%);
+}
+.tlr { display:grid; grid-template-columns:1fr 44px 1fr; margin-bottom:40px; align-items:start; }
+.tlr:nth-child(even) .tlc{grid-column:1;text-align:right;padding-right:36px;}
+.tlr:nth-child(even) .tlm{grid-column:2;} .tlr:nth-child(even) .tls{grid-column:3;}
+.tlr:nth-child(odd) .tls{grid-column:1;} .tlr:nth-child(odd) .tlm{grid-column:2;}
+.tlr:nth-child(odd) .tlc{grid-column:3;text-align:left;padding-left:36px;}
+.tlm { display:flex; justify-content:center; padding-top:10px; }
+.tlnode { width:14px; height:14px; border-radius:50%; background:var(--a1); box-shadow:0 0 14px var(--a1),0 0 28px var(--sh); }
+.tlcard { background:var(--bg-card); border:1px solid var(--bd); border-radius:7px; padding:20px; transition:all .3s; }
+.tlcard:hover { border-color:var(--bdh); box-shadow:0 6px 28px var(--sh); }
+.tld { font-family:'Share Tech Mono',monospace; font-size:.62rem; letter-spacing:.12em; color:var(--a1); margin-bottom:5px; }
+.tlro { font-family:'Syne',sans-serif; font-weight:700; font-size:.97rem; margin-bottom:3px; color:var(--tx); }
+.tlo { font-size:.76rem; color:var(--tx3); margin-bottom:10px; }
+.tlb { list-style:none; }
+.tlb li { font-size:.76rem; color:var(--tx2); line-height:1.75; padding-left:12px; position:relative; }
+.tlb li::before { content:'▸'; position:absolute; left:0; color:var(--a1); font-size:.65rem; top:2px; }
+
+/* ── CERTS ── */
+.chi {
+  border-radius:10px; padding:28px 32px;
+  display:flex; align-items:center; gap:22px; margin-bottom:26px; transition:all .3s;
+  border:1px solid var(--bd2);
+}
+[data-theme="dark"] .chi { background:linear-gradient(140deg,rgba(245,192,64,.07),rgba(232,146,58,.04)); }
+[data-theme="light"] .chi { background:linear-gradient(140deg,rgba(200,112,16,.06),rgba(184,74,14,.03)); }
+.chi:hover { border-color:var(--bdh); box-shadow:0 8px 32px var(--sh); }
+.chii{font-size:2.8rem;flex-shrink:0;} .cht{font-family:'Syne',sans-serif;font-weight:800;font-size:1.25rem;color:var(--tx);}
+.cho{font-family:'Share Tech Mono',monospace;font-size:.68rem;letter-spacing:.12em;color:var(--a3);margin-top:4px;}
+.chy{font-size:.76rem;color:var(--tx3);margin-top:5px;}
+.cg { display:grid; grid-template-columns:repeat(3,1fr); gap:13px; }
+.cert { background:var(--bg-card); border:1px solid var(--bd); border-radius:6px; padding:18px; transition:all .3s; cursor:default; }
+.cert:hover { border-color:var(--bdh); transform:translateY(-3px); box-shadow:0 6px 24px var(--sh); }
+.cico{font-size:1.3rem;margin-bottom:7px;} .cn2{font-size:.8rem;font-weight:500;line-height:1.4;margin-bottom:3px;color:var(--tx);}
+.co{font-family:'Share Tech Mono',monospace;font-size:.62rem;color:var(--tx3);letter-spacing:.06em;}
+.cy{font-family:'Share Tech Mono',monospace;font-size:.6rem;color:var(--a1);margin-top:5px;}
+
+/* ── EDUCATION ── */
+.eg { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:40px; }
+.ec { background:var(--bg-card); border:1px solid var(--bd); border-radius:8px; padding:28px; text-align:center; transition:all .3s; }
+.ec:hover { border-color:var(--bdh); transform:translateY(-3px); }
+.ei{font-size:1.9rem;margin-bottom:12px;} .edg{font-family:'Syne',sans-serif;font-weight:700;font-size:.92rem;margin-bottom:6px;color:var(--tx);}
+.esc{font-size:.76rem;color:var(--tx3);line-height:1.55;margin-bottom:7px;}
+.eyr{font-family:'Share Tech Mono',monospace;font-size:.65rem;color:var(--a1);letter-spacing:.1em;}
+
+/* ── CONTACT ── */
+.cgrid { display:grid; grid-template-columns:1fr 1fr; gap:72px; align-items:start; }
+.ctag { font-family:'Syne',sans-serif; font-weight:800; font-size:clamp(2.5rem,5vw,4.2rem); line-height:1.05; letter-spacing:-.02em; margin-bottom:14px; color:var(--tx); }
+.ctag span { color:var(--a1); }
+.csub { font-size:.89rem; color:var(--tx2); line-height:1.75; max-width:360px; margin-bottom:24px; }
+.cls { display:flex; flex-direction:column; gap:10px; }
+.cl {
+  display:flex; align-items:center; gap:13px;
+  background:var(--bg-card); border:1px solid var(--bd); border-radius:6px;
+  padding:14px 16px; text-decoration:none; color:var(--tx); transition:all .3s;
+}
+.cl:hover { border-color:var(--bdh); transform:translateX(6px); box-shadow:4px 0 20px var(--sh); }
+.cli{font-size:1rem;flex-shrink:0;} .cll{font-family:'Share Tech Mono',monospace;font-size:.6rem;letter-spacing:.1em;color:var(--tx3);text-transform:uppercase;}
+.clv{font-size:.85rem;color:var(--a1);margin-top:2px;}
+.cform { background:var(--bg-card); border:1px solid var(--bd); border-radius:8px; padding:28px; }
+.cft { font-family:'Syne',sans-serif; font-weight:700; font-size:1.1rem; margin-bottom:18px; color:var(--tx); }
+.fg { margin-bottom:13px; }
+.fg label { display:block; font-family:'Share Tech Mono',monospace; font-size:.6rem; letter-spacing:.15em; color:var(--tx3); text-transform:uppercase; margin-bottom:5px; }
+.fg input, .fg textarea {
+  width:100%; background:var(--bg-input); border:1px solid var(--bd); border-radius:4px;
+  padding:10px 13px; color:var(--tx); font-family:'Inter',sans-serif; font-size:.84rem;
+  outline:none; transition:border-color .2s, background .3s;
+}
+.fg input:focus, .fg textarea:focus { border-color:var(--bdh); }
+.fg textarea { resize:vertical; min-height:95px; }
+#fst { font-family:'Share Tech Mono',monospace; font-size:.68rem; letter-spacing:.08em; color:var(--a3); margin-top:9px; min-height:1.1rem; }
+.vc { margin-top:18px; display:flex; align-items:center; gap:7px; font-family:'Share Tech Mono',monospace; font-size:.64rem; letter-spacing:.1em; color:var(--tx3); }
+#vcn { color:var(--a1); }
+
+/* ECG */
+#ecg { height:42px; overflow:hidden; background:var(--bg-overlay); border-top:1px solid var(--bd); transition:background .4s; }
+#ecg svg { width:200%; height:100%; animation:ecgr 5s linear infinite; }
+@keyframes ecgr{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* FOOTER */
+footer {
+  padding:26px 5%; background:var(--bg-footer);
+  border-top:1px solid var(--bd);
+  display:flex; justify-content:space-between; align-items:center;
+  flex-wrap:wrap; gap:12px;
+  font-family:'Share Tech Mono',monospace; font-size:.6rem;
+  letter-spacing:.12em; color:var(--tx3);
+  position:relative; z-index:2; transition:background .4s, border-color .4s;
+}
+.flogo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.1rem; color:var(--a1); }
+
+/* ── LIGHT MODE SPECIAL OVERRIDES ──
+   Light mode gets elevated cards with shadows instead of transparent glass */
+[data-theme="light"] .card,
+[data-theme="light"] .cert,
+[data-theme="light"] .ctr,
+[data-theme="light"] .dom,
+[data-theme="light"] .ec,
+[data-theme="light"] .sp,
+[data-theme="light"] .tlcard,
+[data-theme="light"] .cform {
+  box-shadow: 0 2px 12px rgba(184,74,14,.07), 0 1px 3px rgba(184,74,14,.06);
+}
+[data-theme="light"] .card:hover,
+[data-theme="light"] .cert:hover,
+[data-theme="light"] .ctr:hover {
+  box-shadow: 0 8px 28px rgba(184,74,14,.14);
+}
+/* Light mode section dividers */
+[data-theme="light"] section:nth-child(even) { background:rgba(245,240,230,.88); }
+[data-theme="light"] section { background:rgba(253,250,245,.92); }
+
+/* ── RESPONSIVE ── */
+@media(max-width:960px){
+  .agrid,.cgrid{grid-template-columns:1fr;gap:40px;}
+  .sgrid{grid-template-columns:1fr;}
+  .cg{grid-template-columns:1fr 1fr;}
+  .eg{grid-template-columns:1fr;}
+  .twrap::before{left:18px;}
+  .tlr{grid-template-columns:18px 1fr;}
+  .tlr:nth-child(even) .tlc,.tlr:nth-child(odd) .tlc{grid-column:2;text-align:left;padding-left:22px;padding-right:0;}
+  .tlr:nth-child(even) .tlm,.tlr:nth-child(odd) .tlm{grid-column:1;padding-top:10px;}
+  .tlr:nth-child(even) .tls,.tlr:nth-child(odd) .tls{display:none;}
+  .cfeat{grid-column:1/-1;} .fbody{grid-template-columns:1fr;}
+}
+@media(max-width:680px){
+  .pgrid{grid-template-columns:1fr;}
+  .nlinks,.nbtn,.theme-pill{display:none!important;}
+  #ham{display:flex;}
+  #hero{flex-direction:column;padding:90px 5% 50px;gap:28px;} .hr{width:100%;}
+  .ctrs,.doms{grid-template-columns:1fr 1fr;}
+  .spw .sks{grid-template-columns:1fr;}
+  footer{flex-direction:column;text-align:center;}
+  .chi{flex-direction:column;text-align:center;}
+  .cg{grid-template-columns:1fr;}
+  .scroll-hint{display:none;}
+  .slide-l,.slide-r{font-size:clamp(2.2rem,9vw,3.5rem);}
+}
+</style>
+</head>
+<body>
+
+<canvas id="shader-bg"></canvas>
+<canvas id="bgc"></canvas>
+<div id="pb"></div>
+<div id="cur-dot"></div>
+<div id="cur-ring"></div>
+<div id="cur-trail"></div>
+<div class="scan-line"></div>
+
+<!-- Section Dots -->
+<nav class="sec-dots" id="secdots">
+  <div class="sd on"></div><div class="sd"></div><div class="sd"></div>
+  <div class="sd"></div><div class="sd"></div><div class="sd"></div><div class="sd"></div>
+</nav>
+
+<!-- Loader -->
+<div id="loader">
+  <div id="ld-phrase">INITIALIZING...</div>
+  <div id="ld-bar"><div id="ld-fill"></div></div>
+</div>
+
+<!-- Ticker -->
+<div id="ticker">
+  <div class="tkin">
+    <span class="tg">🟢 ONLINE</span>
+    <span>MOHD UMAR HASHMI — ANDROID DEVELOPER &amp; AI INTEGRATOR</span>
+    <span class="tc">▸ SIUFIT v1.0 SHIPPED</span>
+    <span>▸ GROQ LLAMA 3.3-70B</span>
+    <span class="ta">▸ NPTEL ELITE — IIT MADRAS 2025</span>
+    <span>▸ 800+ EVENT AUDIENCE</span>
+    <span class="tg">▸ OPEN TO OPPORTUNITIES</span>
+    <span class="tc">▸ EDUVATE CONTENT CREATOR</span>
+    <span>▸ UMARHASHMI.NETLIFY.APP</span>
+    <span class="tg">🟢 ONLINE</span>
+    <span>MOHD UMAR HASHMI — ANDROID DEVELOPER &amp; AI INTEGRATOR</span>
+    <span class="tc">▸ SIUFIT v1.0 SHIPPED</span>
+  </div>
+</div>
+
+<!-- Navbar -->
+<nav id="nav">
+  <a href="#hero" class="nlogo">UH.<span class="nled"></span></a>
+  <ul class="nlinks">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#certifications">Certs</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:14px;">
+    <button class="theme-pill" id="theme-btn" onclick="toggleTheme()" title="Toggle theme">
+      <span class="theme-pill-icon" id="theme-icon">🌙</span>
+      <span class="theme-pill-label" id="theme-label">DARK</span>
+    </button>
+    <a href="#contact" class="nbtn">HIRE ME</a>
+  </div>
+  <button id="ham" onclick="var m=document.getElementById('mnav');m.style.display=m.style.display==='flex'?'none':'flex'">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div id="mnav">
+  <a href="#about" onclick="this.parentElement.style.display='none'">About</a>
+  <a href="#projects" onclick="this.parentElement.style.display='none'">Projects</a>
+  <a href="#skills" onclick="this.parentElement.style.display='none'">Skills</a>
+  <a href="#experience" onclick="this.parentElement.style.display='none'">Experience</a>
+  <a href="#certifications" onclick="this.parentElement.style.display='none'">Certs</a>
+  <a href="#contact" onclick="this.parentElement.style.display='none'">Contact</a>
+  <button onclick="toggleTheme();this.closest('#mnav').style.display='none'"
+    style="background:var(--gl);border:1px solid var(--bd);color:var(--a1);font-family:'Share Tech Mono',monospace;font-size:.72rem;letter-spacing:.1em;padding:10px 16px;border-radius:4px;cursor:pointer;text-align:left;">
+    🌙☀️ TOGGLE THEME
+  </button>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+  <div class="hero-zoom" id="hzoom"></div>
+  <div class="hl">
+    <div class="hname-wrap"><span class="hname">MOHD UMAR</span></div>
+    <div class="hname-wrap"><span class="hname c2">HASHMI</span></div>
+    <div class="hrole">
+      <span class="pr">&gt;</span><span id="rt"></span><span class="tcur"></span>
+    </div>
+    <p class="hdesc">I build <b>Android apps</b> that solve real problems.<br>
+    <span class="hhl">SIUFIT</span> — my AI nutrition tracker — uses <b>Groq LLaMA 3.3-70B</b>,
+    barcode scanning, and ICMR-NIN verified food data. Shipped from scratch.</p>
+    <div class="hbtns">
+      <a href="#projects" class="bp">View My Work ↓</a>
+      <a href="data:application/pdf;base64,JVBERi0xLjQKJZOMi54gUmVwb3J0TGFiIEdlbmVyYXRlZCBQREYgZG9jdW1lbnQgKG9wZW5zb3VyY2UpCjEgMCBvYmoKPDwKL0YxIDIgMCBSIC9GMiAzIDAgUiAvRjMgNCAwIFIKPj4KZW5kb2JqCjIgMCBvYmoKPDwKL0Jhc2VGb250IC9IZWx2ZXRpY2EgL0VuY29kaW5nIC9XaW5BbnNpRW5jb2RpbmcgL05hbWUgL0YxIC9TdWJ0eXBlIC9UeXBlMSAvVHlwZSAvRm9udAo+PgplbmRvYmoKMyAwIG9iago8PAovQmFzZUZvbnQgL0hlbHZldGljYS1Cb2xkIC9FbmNvZGluZyAvV2luQW5zaUVuY29kaW5nIC9OYW1lIC9GMiAvU3VidHlwZSAvVHlwZTEgL1R5cGUgL0ZvbnQKPj4KZW5kb2JqCjQgMCBvYmoKPDwKL0Jhc2VGb250IC9IZWx2ZXRpY2EtT2JsaXF1ZSAvRW5jb2RpbmcgL1dpbkFuc2lFbmNvZGluZyAvTmFtZSAvRjMgL1N1YnR5cGUgL1R5cGUxIC9UeXBlIC9Gb250Cj4+CmVuZG9iago1IDAgb2JqCjw8Ci9Db250ZW50cyAxMCAwIFIgL01lZGlhQm94IFsgMCAwIDU5NS4yNzU2IDg0MS44ODk4IF0gL1BhcmVudCA5IDAgUiAvUmVzb3VyY2VzIDw8Ci9Gb250IDEgMCBSIC9Qcm9jU2V0IFsgL1BERiAvVGV4dCAvSW1hZ2VCIC9JbWFnZUMgL0ltYWdlSSBdCj4+IC9Sb3RhdGUgMCAvVHJhbnMgPDwKCj4+IAogIC9UeXBlIC9QYWdlCj4+CmVuZG9iago2IDAgb2JqCjw8Ci9Db250ZW50cyAxMSAwIFIgL01lZGlhQm94IFsgMCAwIDU5NS4yNzU2IDg0MS44ODk4IF0gL1BhcmVudCA5IDAgUiAvUmVzb3VyY2VzIDw8Ci9Gb250IDEgMCBSIC9Qcm9jU2V0IFsgL1BERiAvVGV4dCAvSW1hZ2VCIC9JbWFnZUMgL0ltYWdlSSBdCj4+IC9Sb3RhdGUgMCAvVHJhbnMgPDwKCj4+IAogIC9UeXBlIC9QYWdlCj4+CmVuZG9iago3IDAgb2JqCjw8Ci9QYWdlTW9kZSAvVXNlTm9uZSAvUGFnZXMgOSAwIFIgL1R5cGUgL0NhdGFsb2cKPj4KZW5kb2JqCjggMCBvYmoKPDwKL0F1dGhvciAoTW9oZCBVbWFyIEhhc2htaSkgL0NyZWF0aW9uRGF0ZSAoRDoyMDI2MDMyMjIyMTc0NSswMCcwMCcpIC9DcmVhdG9yIChcKHVuc3BlY2lmaWVkXCkpIC9LZXl3b3JkcyAoKSAvTW9kRGF0ZSAoRDoyMDI2MDMyMjIyMTc0NSswMCcwMCcpIC9Qcm9kdWNlciAoUmVwb3J0TGFiIFBERiBMaWJyYXJ5IC0gXChvcGVuc291cmNlXCkpIAogIC9TdWJqZWN0IChcKHVuc3BlY2lmaWVkXCkpIC9UaXRsZSAoTW9oZCBVbWFyIEhhc2htaSAtIFJlc3VtZSkgL1RyYXBwZWQgL0ZhbHNlCj4+CmVuZG9iago5IDAgb2JqCjw8Ci9Db3VudCAyIC9LaWRzIFsgNSAwIFIgNiAwIFIgXSAvVHlwZSAvUGFnZXMKPj4KZW5kb2JqCjEwIDAgb2JqCjw8Ci9GaWx0ZXIgWyAvQVNDSUk4NURlY29kZSAvRmxhdGVEZWNvZGUgXSAvTGVuZ3RoIDMyNjkKPj4Kc3RyZWFtCkdhdWBWPkJlZjIoNE9UNWZNPmRwTCxjblNrMzo2RyxkYFpbUio8Y1cua2NjMzVjcTouZmtzVTJsQW4vNlo0U0VLNlgvOS5YPGNHXVYxJj05XClnXyJpalliNS1PWUdgJzAqVjJecDdCKCJqOGMuUWpmWlEzVmhqVkMxX2RDQEc2YFs2ZjpJaCc6OVAhTFZubDJqJlo1OCk3YyVKSm1pcF9JS0Q1Y18pM2dYJTUsMCsvU3FYY1xWNy5EWVQxdEMiNHRRXzhJRCQ5bUleWTxPKloiaGgyQUksS0BfZ1EhMGM8dUZFOExcb2NDa2xNPDxKQ2RDL2NbIWxIZyIvI18oKVBSTEc6OT9DXzNTZj0oVShpSnJzb0EuNFM7Ji88ZW5sMFJvXz9LbSsxVlRYZD85ckswSz1uITk1dFdjZiRfMjpOYiJGXTFbKC51cSpdJypJXVZPVTUnakAvJjB0c0JCJz05Py4+RmxyNUArXkhgTllTNDs+RidGQFlJOmhCVSY2bE0/NitYXChucCVaLnFBVCM9ZjdCcmZtdC5KQD4pTUM4TU9TVkMtZE1hPWhhUjRmbi1IUDhHRTgsalA+LjthRCUnSWwnIkUhOSxuZGc1dVI4RWRPcz05XTRkN2kmWnQ2WU5hTDJfTmY2ZyNCcWBuR0VSTlUqSTFFZyIzbSNuaiRaSkpWWWpLZlJNW1xVWSlkJVtKQC03WVdubGxhbiV0bSozW05UQjptNzlsb2Bjbm5ZckFZa1JoWGxPNmhpQkllczFQX1xJUF5iXUsySmUqI2BpZytoX0pGJURlUy0jO05ZLi8pKXRLYSYsVDdPU0lfXkYjRWt1PyxNNSUlNS1vOWk7M2UmdS5GM1NFI0E1Y1stUFJVUFFESC4pV0ZxKUs+OyMkVjtYaCVjOHFxQ0FbUDJXVXIqMSgiVEQzTT42WTE2ZEBPRTVQP09lRkpeNlpBNSYlM0pZSlNDQlxWYVdwLS5PRTk9O0Q+TSsuN2YnZCNaRnUtN0JEZVliJkphJjU7NCg/OyVGXTZTLUosRi9qJ2Mvbjw8dSxRS0w0NixRMyIzR0J1J1RfKnJVSyxNazcuZSs1N0ItX0kpck9xS1JHVE8jJzxLJCRtISVXN2VIWjpONTMxMXQ6N0t1QXIwV0A3IyooMG08KyJNQlhnQVBYdXBSIkBiWWROcnMlSzFzXTFWL18jInIvTyM0T3NTKD4pSDAzTkc4YF0yRi5UImBUNFZWIitmVS0mOFgzOWArPTZbL2w0WVZHSkwzRHMlSDApWissYC1kX05aO3NBIzdtSVktRyg1WEppQjRrLkZPQV9YNnMjOm80WHFvQ3BlbCpFJmBWZyQkMj9uWUQ1YiI7ZXRoV0A2R2FkMWRXX0s+QFtbLFNkLT1AVEJZR0xYdWFjL2gtWFBfbUItJDJYN2BnJGYrbyhaKSNLSGglZEpaLGVedE4pPURvPGRbQkVzZ0ghKFhtPDJQMC1vPVdva0xWWUZGLDo6biMvYW1JWkBsTnEpWVFzVyJWNF0tXUVtPDZEUWJeNzRock5cYWw3bzI1Y1EuSSRuWWAxMiQyTlRpUkUkOTptaDYqQF1Jc25tMWsxK2YqLGY+NHA5ZSpob1FfMFFNSS0mQDJUbC4vU09yXnJyUC4vNClaZGU2OVAsRmAjRSsrUWg8UGNmTSJkLmhMLUNMQERJbSNqNlpYWklEaCtgYlBAU2xEIWAnaXBQZy45Zy1aSzZtbDZWV2JjU0E4J0MiZD1OKFppV1kmUi1KPWcnPTxCQ11xazBMPSNvcihVYztjNE9Ya3E3QCQwVHE7K0BAMFhKXEUmPCMuNm89LEU/XGdUYlAyZT9tWChVOzo7WGMrY0A1TWxxNUcmVT86Q2hfUlpNZXN1cnE6TiZJQUxxY0FrVlVrLUEwVGUuPWc5IiErU0ZYVjJpL181RywzTkBXPWFwNnFQUyZuWT9Pb0ZNVyFQT0pTakwzNnFyQU8iWWciT190Vk5RV1FFL09zSGtubUVQbSQlNV4yaFNkSk1rbGkxS2E3NUZSRCJhVmcsKlJgKUltSHJnblsoaTJrTDBiXEFqNEw/aytcaS9FUUBLUW0yNzI9OTk3L1VVJl5LTWFWNHEpRF0nSDRbYDtObidvK2JONykmQUpHSlI8ZiNDNCRgNW08JEw0KFc3JG1gPTxAN2ltLml0NHRIMXU5VElKXmZuIlhkMFo2LVYhRGJHaSMsRSNNUikxQTFIWVlUV21bRzApYzFTYSNOOXQwYlZxSnVyZ1M5IW41RSksQyVSOWNuXjxnWFdbU283WSVkVCRicSMqREdHSmN0KG9CbHE7OVw/c0tTWzdSJXFbZkM/SHMvbDdPXyVcY0xMc1EyRi5KOz43XzgiJlY/Lz1cSzJsX3M0IyFIWyNkPW0jPUM0ci5XNyt0NVMxY1JpUDRZXCM3c0tmaVNHPDVSNW9EMzhHa1tYTSsrcWI8cUFRVElQZGF1J05iPmU5Z0NcXS9nXSUkMEo+MkdCXj5dKDhVMj5bZm9hZTRCRmhAW0stKWk2STItSW8oR2JeLGdBO2FQU0ZOLyoiXlQmV29qbXFDJ0lPK01pIjQ3T2Q/NTU/LDhVTT0zN2J0PXBgWipaY0A6LyZRNW5bQSVEUyZpTyQ+VztITkV1Oz9tPjUjTF10KkI4RFJ0MG1jaHRlM2w0UjxkRnBHQjBRMGJnQklcPlU6MnRWWScvWUdcXTxAPi5aWC5GTihrYzA7R3JdUCUwQltgcWgyVGRhalFTOiNDLSFtRV1NUzkkNy1SLkBwZnVPMyFhTjksKGIpZ0U1MVFOZlBkNlxWMDVAcyN1Nzs6OFo6LFlPYDk9Km9WXSdHZmAyZ25eRyYpY3RRaTlZV0FqX2kqNCFSPnFvSmNJNTFgcHQ0VWleOjtZbUE8IyUyV2srW0ZkLDZtVjtLTy0yR0FDSEpwc0AtZ2NZXTBgcjVtWFxNaFczQ3BUXDhcZjNrIToxbUAnSSc0YkFWImI0ckxkUDxbZ286KmBicCpaaCtPRWFxOGlfKyNYdUlvOFFcJlg2UVZUUyUub2F1cmo3XFNNWkpGUitGMk1TX0MuNVE0OVpQXmZYXiIjYFBYLk9cUjd0dDJQPTRvNzM1bUxRbnUoSXI6Q2JkbjRMMGFmSCdWPSdyViotTjBtSjs9bCJXLXAwV01GQVNRPSI+YCYoVT8tRFBvOVlkJSIwI1MzSyxFTl1gcj5MOE5xQXNhVTcvODpbZ20nSWc/Ky5zQCtGQmtyJiosNUBTYlt1Li5LWGMuZ1pQKnU0YWluNF5kPzRSSWJNJCojU0JpdE9bQ0Y2QCtCSyZKbmwtPmZAQ0lxLUVwPTRsX1hRbSVPLzFdOVxfZSpGLGwsRHMyWkEpPmhgTltgSVxbXWNFM1lvWGVdY0JQbD5UUy5RLS9xdHBYLSNFIWo9WF1SZ0VFQzFHb1MuMCZDIVsnSlJjXT1aZ2M2QlRAdFdZR1JQXW5mXG0lTWFMMXE2SWptKiosITFdNT1kTytJdWpKTktEcyxAcnJDYT1hUkZbJ2FnPFkjW0ptWSFiVERfW0I1Xl50K15NSTdfIkNjTjsnJkVSXyIxWDBjQy0+bmtJbyhUWF8+VVRodGYrS0gkMnMzKjhBMUksU2k7PHJcPSJjb2EzNj1MNGU7J0teQWtRTTxoM2BCXDxHMi1ecjBUU146bz1AdClecFRWcm5yZCVpY0hwRkpOaVkzN0Aka2drIz1ZNjYkTzYzWCk9XzksYW0zLz9VV1l0bT9KT2VOQywkI0EzTllENVs6KlNvb18oKGg2MlVJQmI0XyVNPShKNElGUkFSPUc1OC9UXzssY19JQVluPSU/ZUc0QCtaJjEuRWltRigoW2VXWnBZVDNdQyM3PU5JO0Jzai5rWjhFbCc3KVBUU207YT5VUiNnT0lOO1RvTGxsUWxbR1xvLV5VRHU5M3JnSUBwUXVNMzdyaiNlUEtdL1FGbEJKcSJeK2syWmw+PFZqUDdBPzE3XFEmWV5Sbk5QSiorJC40UyxSNnNjSm8+dTgrOz9gLyFzSTdHYFRbdC0yKipbcj4uOTkyU11GNGxsJmo8SiwnOktPYS5UWU9mczZJZlVCVGdhZk08WydLcCoxb0w9SFtzVTNGQ19CPkJMNVE/ZyRCdTNRSWM/dSZ0VUJuajljalNnKktQSW9eZyVyYXI8W0ksZ1oqU2hCQmJGOVlNL3NJJmpDKjAqW0NKOXBOOzZGSyYlZGQ4Xl5KSlVWSjIvISRHZiNuIUMqVCw3JkQ/W2ZSRGEqOmciWVE1bWRQQCRjakc5X3VvKGRWVVUySUpXcEBSMVcxV0llI2lmRGtJNGJbdGhiNUxiI2ZodX4+ZW5kc3RyZWFtCmVuZG9iagoxMSAwIG9iago8PAovRmlsdGVyIFsgL0FTQ0lJODVEZWNvZGUgL0ZsYXRlRGVjb2RlIF0gL0xlbmd0aCAxOTIyCj4+CnN0cmVhbQpHYiEjXWdOSyZHJ1JlOy9TPlROWE4nay1jcUlWZ2JvckwsRUElRl0zR3U2ZzIyMVFNZVZzV0JmJmJuQnIwbDpVWEdWKjhmO1JYbS1rRyFTMDNrZ1JMNGohZFAraFR1dF5iP3A6Sm1pRlFLR1AyUS1pXWJUbF1JNCpsKSpSMmkvTWonbm9PdXNpR0cqcCkuRDBKZHJJLG4yLUROb1g0OSZfYEJPa3RJRzZHRlRHYGNIaGByR0BcMj9BWlhwJ2tmT2I/WCVTNGdrWytbaUEnbnNnJkNHYjIpRyg2UmA/LjpRQzdSYDFAJUVESWwyJygkRWVULTQmMVRtYCEqYHQ1alheUEplWE1qUDVJZE1QLyhSNmkwRDxMa2FEN0FPbWMkbVstRSJkMjVKV0okKWctIjBAR3I5YjY7K1Yxc0YiRkZlRkspcSFFSEIuJDxCNyMiJmRkLFgzM1NBQU5mM0ZkJTBcTERvQkY0WGEmRVt0IiI6cWwkRSRaLHBZUjZmcEBxUU4vPXVVKFNbVXJaJzAnUDIwMXUlTSoqTEYzTzpXR1Y0TmZGcDdvZmRRZy89XzRqZV0oKURsWGplJFdIZ0JnYDZIOlUwW1hvW0NSUWw1TUgxIiUiNkIpXmdfU0s8PG5nalVQMGx0QEVDVldwVklUTTckKD5GTVkzaVdMWmpvQTM2OnVyKjhUQmZHUlppc3VpLEFCZVRGYU4xak9YbEYwUkl1UzNAUkxObm0tKXUhKit0WU5NJmVRcllMZWU4L0FJblc2OGpTJWwwYFwkRW1Hc1ckS1kxVTxvW0JNakYlLT8xOGw8UGtWOjdQNyRJJCMnaEt1MCtvWzdHOFo9My5PaG9AbD9CQGNMdDNfO2QiaiVRO25ncmxxW2wmNzgnZ2VFcDw+ZVxVMEhlcy8yZkkoUFwqPk5sbCgvTksyNyRWb09ZXjRSRExpK1syNGopJChyWjdPKmZtJmZdL1JlSDdkOm1VMWtiOjNGMDgvX0ktRV9bJiFKT181aW1vRkZnLSQ6MVF0PFU2TCgyJiRGWm4wMkNoTExKXWw0XE8sLzs/PE1qTDFiVm9DIjJ1SG4+TnRRIW0zI11kbWItdT4zRy5MXCJCcm9JRDhWTm8sbzpoWTVhX3RuOGw/Y2QuOTJPYE4iVCFkaDRSXFVaOm5BdV1dXCEjcmpFaFRcT1FpQCNMUWFfYko3RzYzW2IzZ0QmNSxsZk5SJ2lNWm1gOFZXMlc9RmtIZi1AOypzUzVFRl9ZTnFwOiVfVGdpIVUwXSNLSFhwZmUzTzgtRSMpaU1iXkJsY1hEc2FcLF9QKFIuVTZLN3AhKzUwNDNBL0trPyhZUGcoZWdnZWdLLSRFR1YhM0M0X2teVUczTCpgXFZNVS07SVs9Lml1T3JFSyxNX0lPIyZnPm9IdEZWNl5WcUdtVzFuWGonJExkRzczZVhaKy5QRi87QiMnXDtAR1I3SVk+VDBbS3BoT2hZNjhEUmkhRWY3QT1JPTdSYE8tbigmKWdOP0dkLz5BQyNtLydub08wTlUkOSVOW21LbHVGcj1aOmd0ZXI6SHJHNj8nZSNNQiRsWStEKnJWbmwoZTQuZUJVRUgtQC4yVix0KzpKP19VRFhPWSwqTkY+PmotP0lvVjZbYkglS2ZzIUEhL19rWWkkLDJDQWE3O2NXbzZhTCNubkYjTDA0Iy9BdDNuJF9qcFNsSUw1KUlAPTdVcTZvXGIjQzhMYiZAR1c+aipPRFpnWm9ENy5eMT9UPk9ZQWg2aVo9LzwjcUxMXGRVZlRFT3QkMEppUWwmbF9EXUxgWElHISgpJHU6KnVdclkoTWlgIW9OR1gmLFUiUUs8YV1DV2ItcVE7UzcqanI2MTM8bz4+SDBjWk1QZ2JPN1EiRk1mTWloUlVuJElrREpHNGdmaCFCVytSWWkmb2wyVUQ4JGRJRGBMVEtnO1NyOmFuZ1JzRzNfL0opMWVjW1s0TCkpPUsiLTcrRi9VZGxzZGxoSjUvK2ZOKDo3OUpnaCklTVstLW5jTDNcLl0oLGI2QWZdKmVZUWVHWT4tInNuImguXVhiI2I9M0ppKURFL2RDXE5qMUI4Wm5UcWNLXms+W1Y3X3VQNlk9YCE2N3VFU0ZCWkpiL0hXXjhcUyZRS2tpI1VuK2tHSWU+ZyJCJjFuRjZcKzAkZ189anJNZFlRPWpxMjpJc1snb2VFYEtdZm91YjY4IVEncGAhPEtbazpualguNSExPCwnWGJLJCckKF5NOVMiQU50WypnQylRXVcpU0FQPkUuMk9PRmxUPWZsbV9iOVtHayFkQGtsTFUmK1stSDphRDhCcVA6OFRoVkZgMitKbV9BTWcqXFFhR2dZaE45QGlIVXEubmBpLkNuUG5JU0JGKWlYS15EMzlkI0ZdZCNEdF9DUW01dSJBKUFmWzovOz50VzBFYHEpPDUtNC9nLG9OR2lmSFhvJjJqUSwnODIuNlkxSS9QOzVMQVw2QGRIPiE+aFAmPFs9QmgpY1ssUlhNWFNVaSZrM2VkK19WaEdfYVwzaUtbJzEzYjctJCJ1dURoJVllb3F+PmVuZHN0cmVhbQplbmRvYmoKeHJlZgowIDEyCjAwMDAwMDAwMDAgNjU1MzUgZiAKMDAwMDAwMDA2MSAwMDAwMCBuIAowMDAwMDAwMTEyIDAwMDAwIG4gCjAwMDAwMDAyMTkgMDAwMDAgbiAKMDAwMDAwMDMzMSAwMDAwMCBuIAowMDAwMDAwNDQ2IDAwMDAwIG4gCjAwMDAwMDA2NTAgMDAwMDAgbiAKMDAwMDAwMDg1NCAwMDAwMCBuIAowMDAwMDAwOTIyIDAwMDAwIG4gCjAwMDAwMDEyMTcgMDAwMDAgbiAKMDAwMDAwMTI4MiAwMDAwMCBuIAowMDAwMDA0NjQzIDAwMDAwIG4gCnRyYWlsZXIKPDwKL0lEIApbPDNlOTliZDA3NzhmMGI3YjIyZDhkMmZjOGM4Yjk4YTg4PjwzZTk5YmQwNzc4ZjBiN2IyMmQ4ZDJmYzhjOGI5OGE4OD5dCiUgUmVwb3J0TGFiIGdlbmVyYXRlZCBQREYgZG9jdW1lbnQgLS0gZGlnZXN0IChvcGVuc291cmNlKQoKL0luZm8gOCAwIFIKL1Jvb3QgNyAwIFIKL1NpemUgMTIKPj4Kc3RhcnR4cmVmCjY2NTcKJSVFT0YK" download="Mohd_Umar_Hashmi_Resume.pdf" class="bg2">⬇ Resume</a>
+    </div>
+    <div class="hbadges">
+      <span class="hb">🤖 Groq AI Integrated</span>
+      <span class="hb">⭐ NPTEL Elite — IIT Madras</span>
+      <span class="hb">🟢 Open to Opportunities</span>
+    </div>
+  </div>
+  <div class="hr">
+    <div class="term">
+      <div class="tbar">
+        <span class="tb tbr"></span><span class="tb tby"></span><span class="tb tbg"></span>
+        <span class="tlbl">umar@dev — ~/portfolio</span>
+      </div>
+      <div class="tbody">
+        <div class="tline"><span class="tp">&gt;</span><span class="tk">umar</span><span class="to">.role&nbsp;=&nbsp;</span><span class="ts2">"Android Developer"</span></div>
+        <div class="tline"><span class="tp">&gt;</span><span class="tk">umar</span><span class="to">.stack&nbsp;=&nbsp;</span><span class="tar">["Kotlin","Firebase","Groq AI"]</span></div>
+        <div class="tline"><span class="tp">&gt;</span><span class="tk">umar</span><span class="to">.location&nbsp;=&nbsp;</span><span class="ts2">"Moradabad, India 🇮🇳"</span></div>
+        <div class="tline"><span class="tp">&gt;</span><span class="tk">umar</span><span class="to">.status&nbsp;=&nbsp;</span><span class="ts2">"Open to Work 🟢"</span></div>
+        <div class="tline"><span class="tp">&gt;</span><span class="tk">umar</span><span class="to">.flagship&nbsp;=&nbsp;</span><span class="ts2">"SIUFIT v1.0.0"</span></div>
+        <div class="tline"><span class="tp">&gt;</span><span class="tk">umar</span><span class="to">.ai&nbsp;=&nbsp;</span><span class="ts2">"Groq LLaMA 3.3-70B"</span></div>
+      </div>
+    </div>
+    <div class="nowcard"><span class="ndot"></span>BUILDING: SIUFIT v2.0 &nbsp;|&nbsp; OPEN TO WORK</div>
+  </div>
+  <div class="scroll-hint"><span class="sh-line"></span>SCROLL DOWN</div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-inner">
+    <span>Android Dev</span><span class="dot">✦</span><span>AI Integration</span><span class="dot">✦</span>
+    <span>Kotlin</span><span class="dot">✦</span><span>Firebase</span><span class="dot">✦</span>
+    <span>Groq AI</span><span class="dot">✦</span><span>Content Creator</span><span class="dot">✦</span>
+    <span>Public Speaker</span><span class="dot">✦</span><span>NPTEL Elite</span><span class="dot">✦</span>
+    <span>SIUFIT</span><span class="dot">✦</span><span>Open to Work</span><span class="dot">✦</span>
+    <span>Android Dev</span><span class="dot">✦</span><span>AI Integration</span><span class="dot">✦</span>
+    <span>Kotlin</span><span class="dot">✦</span><span>Firebase</span><span class="dot">✦</span>
+    <span>Groq AI</span><span class="dot">✦</span><span>Content Creator</span><span class="dot">✦</span>
+    <span>Public Speaker</span><span class="dot">✦</span><span>NPTEL Elite</span><span class="dot">✦</span>
+    <span>SIUFIT</span><span class="dot">✦</span><span>Open to Work</span><span class="dot">✦</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+<div class="jesko-bg-text">ABOUT</div>
+<div class="sw">
+  <div class="agrid">
+    <div class="rv">
+      <div class="slabel">// 01 — ABOUT</div>
+      <h2 class="stitle wr"><span>Developer.</span><span>Teacher.</span><span>Builder.</span></h2>
+      <p class="abio">I'm an <b>Android developer and AI integrator</b> from Moradabad, UP — pursuing BCA at Teerthanker Mahaveer University (2023–26). I write production Kotlin, integrate real AI APIs, and ship working apps.<br><br>
+      My flagship <span class="agl">SIUFIT</span> is a full Android nutrition tracker — Groq LLaMA 3.3-70B coach, barcode scanner, calorie ring dashboard, Firebase backend, achievement system and CSV export. Built entirely solo.<br><br>
+      I create <b>Grade 8 Robotics &amp; Python curriculum</b> for Eduvate, facilitate <b>AI/ML/DL workshops</b>, and hosted events for <b class="agr">800+ audiences</b>. NPTEL Elite certified from IIT Madras (2025).<br><br>
+      <span class="agr" style="font-family:'Share Tech Mono',monospace;font-size:.8rem;">STATUS: Open to Opportunities 🟢</span>
+      </p>
+      <div class="ctrs">
+        <div class="ctr rv d1"><span class="cn" id="c1">5+</span><span class="cl2">Apps Shipped</span></div>
+        <div class="ctr rv d2"><span class="cn" id="c2">10+</span><span class="cl2">Certifications</span></div>
+        <div class="ctr rv d3"><span class="cn" id="c3">800+</span><span class="cl2">Event Audience</span></div>
+        <div class="ctr rv d4"><span class="cn" id="c4">3+</span><span class="cl2">Years Building</span></div>
+      </div>
+    </div>
+    <div class="rv d2">
+      <div class="doms">
+        <div class="dom"><div class="di">📱</div><div class="dt">Android Dev</div><div class="ds">Kotlin · Firebase<br>ML Kit · CameraX</div></div>
+        <div class="dom"><div class="di">🤖</div><div class="dt">AI Integration</div><div class="ds">Groq · LLaMA 3.3<br>Prompt Engineering</div></div>
+        <div class="dom"><div class="di">🌐</div><div class="dt">Web Dev</div><div class="ds">HTML · CSS · JS<br>WebGL2 · Firebase</div></div>
+        <div class="dom"><div class="di">🎤</div><div class="dt">Leadership</div><div class="ds">Events · Teaching<br>Public Speaking</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- SLIDE TEXT -->
+<div class="slide-wrap" id="slide-wrap">
+  <span class="slide-l" id="slide-l">We Build</span>
+  <span class="slide-r" id="slide-r">Real Things.</span>
+  <p class="slide-sub">Android Developer · AI Integrator · Content Creator · Moradabad, India</p>
+</div>
+
+<!-- PROJECTS -->
+<section id="projects">
+<div class="jesko-bg-text">BUILD</div>
+<div class="sw">
+  <div class="rv">
+    <div class="slabel">// 02 — PROJECTS</div>
+    <h2 class="stitle wr"><span>What I've</span><span>Built.</span></h2>
+    <p class="ssub">Production Android apps, live websites, and educational content — shipped.</p>
+  </div>
+  <div class="pgrid ze">
+    <div class="cfeat rv d1">
+      <span class="ftag">★ Flagship Project</span>
+      <div class="fn">SIUFIT</div>
+      <div class="fsub">AI NUTRITION TRACKER — BUILT FOR INDIA</div>
+      <div class="fbody">
+        <div>
+          <p class="fdesc">Full production Android app built entirely from scratch. <b style="color:var(--a1)">Groq LLaMA 3.3-70B</b> AI nutrition coach, barcode scanner with torch, calorie ring dashboard, WorkManager reminders, 10 achievement badges, CSV export. Firebase Auth + Firestore + Storage. Food data from ICMR-NIN, USDA API &amp; Open Food Facts.</p>
+          <div class="pills">
+            <span class="pill">Kotlin</span><span class="pill">Firebase</span><span class="pill g">Groq AI</span>
+            <span class="pill">CameraX</span><span class="pill g">ML Kit</span><span class="pill a">USDA API</span>
+            <span class="pill a">Open Food Facts</span><span class="pill">MPAndroidChart</span>
+            <span class="pill">Lottie</span><span class="pill p">WorkManager</span>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;">
+            <a href="https://siufit.netlify.app" target="_blank" class="bp">Visit Website →</a>
+            <a href="#" class="bg2">⬇ APK</a>
+          </div>
+          <div class="fmet">
+            <div class="fm"><div class="fmn">5+</div><div class="fml">Screens</div></div>
+            <div class="fm"><div class="fmn">10</div><div class="fml">Badges</div></div>
+            <div class="fm"><div class="fmn">₹0</div><div class="fml">Free</div></div>
+            <div class="fm"><div class="fmn">AI</div><div class="fml">Groq Coach</div></div>
+          </div>
+        </div>
+        <div class="phones">
+          <div><div class="ph"><div class="phn"></div><div class="phs"><div class="phl">HOME</div><div class="ph-ring"></div><div class="phb"></div><div class="pht"></div><div class="phb g"></div></div></div><div class="phtag">Home</div></div>
+          <div><div class="ph" style="border-color:var(--bdh);"><div class="phn"></div><div class="phs"><div class="phl">DASHBOARD</div><div style="width:34px;height:34px;border:2.5px solid var(--a1);border-radius:50%;opacity:.5;"></div><div class="phb"></div><div class="phb a"></div><div class="phb g"></div></div></div><div class="phtag">Dashboard</div></div>
+          <div><div class="ph"><div class="phn"></div><div class="phs"><div class="phl">AI CHAT</div><div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--a3),var(--a1));opacity:.4;"></div><div class="pht" style="width:80%;"></div><div class="phb g" style="width:76%;"></div><div class="pht"></div></div></div><div class="phtag">AI Chat</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="card rv d2"><div class="ch"><span class="ci">✅</span><span class="cbg built">BUILT</span></div><div class="ct">Task Manager App</div><p class="cd">Android task manager with SQLite offline storage, priority tags, reminders, and clean Material UI.</p><div class="pills"><span class="pill">Java</span><span class="pill">SQLite</span><span class="pill">Android Studio</span></div></div>
+    <div class="card rv d3"><div class="ch"><span class="ci">📝</span><span class="cbg built">BUILT</span></div><div class="ct">Notes App</div><p class="cd">Offline-first notes with categories, rich text support, and Firebase Firestore cross-device sync.</p><div class="pills"><span class="pill">Kotlin</span><span class="pill g">Firebase</span></div></div>
+    <div class="card rv d1"><div class="ch"><span class="ci">🎓</span><span class="cbg built">BUILT</span></div><div class="ct">College Utility Tools</div><p class="cd">Multi-utility app for TMU students — GPA calculator, timetable, attendance tracker.</p><div class="pills"><span class="pill">Java</span><span class="pill">Android Studio</span></div></div>
+    <div class="card rv d2"><div class="ch"><span class="ci">🌐</span><span class="cbg live">LIVE</span></div><div class="ct">SIUFIT Website</div><p class="cd">Skeuomorphic landing page with WebGL2 Aurora background, ColorBends fluid animation, Firebase feedback.</p><div class="pills"><span class="pill">HTML/CSS/JS</span><span class="pill g">WebGL2</span><span class="pill g">Firebase</span></div></div>
+    <div class="card rv d3"><div class="ch"><span class="ci">🐍</span><span class="cbg cont">CONTENT</span></div><div class="ct">Grade 8 Curriculum — Eduvate</div><p class="cd">Robotics &amp; Emerging Tech + Python/Pygame curriculum for 8th graders. Live classroom teaching.</p><div class="pills"><span class="pill a">Python/Pygame</span><span class="pill a">Robotics</span><span class="pill a">EdTech</span></div></div>
+  </div>
+</div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+<div class="jesko-bg-text">STACK</div>
+<div class="sw">
+  <div class="rv"><div class="slabel">// 03 — SKILLS</div><h2 class="stitle">Tech Stack</h2></div>
+  <div class="sgrid">
+    <div class="sp rv d1">
+      <div class="sph">📱 Android Development</div>
+      <div class="sk"><div class="skr"><span class="skn">Android Studio</span><span class="skp">88%</span></div><div class="skbg"><div class="skf c" data-w="88"></div></div></div>
+      <div class="sk"><div class="skr"><span class="skn">Kotlin</span><span class="skp">85%</span></div><div class="skbg"><div class="skf c" data-w="85"></div></div></div>
+      <div class="sk"><div class="skr"><span class="skn">Firebase (Auth/Firestore/Storage)</span><span class="skp">82%</span></div><div class="skbg"><div class="skf c" data-w="82"></div></div></div>
+      <div class="sk"><div class="skr"><span class="skn">ML Kit / CameraX</span><span class="skp">75%</span></div><div class="skbg"><div class="skf c" data-w="75"></div></div></div>
+      <div class="sk"><div class="skr"><span class="skn">Java</span><span class="skp">70%</span></div><div class="skbg"><div class="skf c" data-w="70"></div></div></div>
+      <div class="sk"><div class="skr"><span class="skn">SQLite / Room</span><span class="skp">72%</span></div><div class="skbg"><div class="skf c" data-w="72"></div></div></div>
+    </div>
+    <div class="sp rv d2">
+      <div class="sph">🤖 AI &amp; Intelligence</div>
+      <div class="sk"><div class="skr"><span class="skn">AI Tools (ChatGPT / Gemini)</span><span class="skp">90%</span></div><div class="skbg"><div class="skf g" data-w="90"></div></div></div>
+      <div class="sk"><div class="skr"><span class="skn">Prompt Engineering</span><span class="skp">85%</span></div><div class="skbg"><div class="skf g" data-w="85"></div></div></div>
+      <div class="sk"><div class="skr"><span class="skn">Groq AI Integration</span><span class="skp">80%</span></div><div class="skbg"><div class="skf g" data-w="80"></div></div></div>
+      <div class="sph" style="margin-top:22px;">🌐 Web Development</div>
+      <div class="sk"><div class="skr"><span class="skn">HTML / CSS</span><span class="skp">80%</span></div><div class="skbg"><div class="skf a" data-w="80"></div></div></div>
+      <div class="sk"><div class="skr"><span class="skn">WebGL2 / Shaders</span><span class="skp">65%</span></div><div class="skbg"><div class="skf a" data-w="65"></div></div></div>
+      <div class="sk"><div class="skr"><span class="skn">JavaScript</span><span class="skp">60%</span></div><div class="skbg"><div class="skf a" data-w="60"></div></div></div>
+    </div>
+    <div class="sp spw rv d3">
+      <div class="sph">🎤 Soft Skills &amp; Leadership</div>
+      <div class="sks">
+        <div class="sk"><div class="skr"><span class="skn">Teaching &amp; Mentoring</span><span class="skp">90%</span></div><div class="skbg"><div class="skf p" data-w="90"></div></div></div>
+        <div class="sk"><div class="skr"><span class="skn">Public Speaking</span><span class="skp">85%</span></div><div class="skbg"><div class="skf p" data-w="85"></div></div></div>
+        <div class="sk"><div class="skr"><span class="skn">Event Management</span><span class="skp">82%</span></div><div class="skbg"><div class="skf p" data-w="82"></div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+<div class="jesko-bg-text">JOURNEY</div>
+<div class="sw">
+  <div class="rv"><div class="slabel">// 04 — EXPERIENCE</div><h2 class="stitle wr"><span>The</span><span>Journey.</span></h2></div>
+  <div class="twrap">
+    <div class="tlr rv"><div class="tlc"><div class="tlcard"><div class="tld">2025 — PRESENT</div><div class="tlro">Content Creator</div><div class="tlo">Eduvate</div><ul class="tlb"><li>Developed complete Grade 8 curriculum for Robotics &amp; Emerging Technology.</li><li>Created Python/Pygame course materials used in live classroom teaching.</li><li>Designed lesson plans bridging theoretical concepts with practical implementation.</li></ul></div></div><div class="tlm"><div class="tlnode"></div></div><div class="tls"></div></div>
+    <div class="tlr rv"><div class="tls"></div><div class="tlm"><div class="tlnode"></div></div><div class="tlc"><div class="tlcard"><div class="tld">2024</div><div class="tlro">Guest Facilitator — AI/ML/DL Workshop</div><div class="tlo">Ran Public School, Rudrapur</div><ul class="tlb"><li>Delivered hands-on AI, Machine Learning &amp; Deep Learning demonstrations.</li><li>Conducted large-audience sessions with live tool demonstrations.</li><li>Received recognition for technical delivery, communication &amp; leadership.</li></ul></div></div></div>
+    <div class="tlr rv"><div class="tlc"><div class="tlcard"><div class="tld">MAY 2024 – JUL 2024</div><div class="tlro">Medical Representative (Internship)</div><div class="tlo">S.S. Pharmaceuticals, Moradabad</div><ul class="tlb"><li>Product promotion, customer communication, and field marketing.</li><li>Coordinated with cross-functional teams to meet campaign objectives.</li></ul></div></div><div class="tlm"><div class="tlnode"></div></div><div class="tls"></div></div>
+    <div class="tlr rv"><div class="tls"></div><div class="tlm"><div class="tlnode"></div></div><div class="tlc"><div class="tlcard"><div class="tld">2023 — PRESENT</div><div class="tlro">Event Organiser &amp; Coordinator</div><div class="tlo">Teerthanker Mahaveer University</div><ul class="tlb"><li>Managed university events with 800+ participants — logistics, stage &amp; tech.</li><li>Hosted events as MC with strong public speaking presence.</li><li>Recognised by faculty for excellence in organisation and coordination.</li></ul></div></div></div>
+    <div class="tlr rv"><div class="tlc"><div class="tlcard"><div class="tld">AUG 2022 — PRESENT</div><div class="tlro">Freelance Personal Educator</div><div class="tlo">CS &amp; Mathematics · Independent</div><ul class="tlb"><li>Delivered customised tutoring in Computer Science and Mathematics.</li><li>Improved student academic performance using adaptive learning strategies.</li><li>Established long-term academic mentorship with consistent measurable results.</li></ul></div></div><div class="tlm"><div class="tlnode"></div></div><div class="tls"></div></div>
+  </div>
+</div>
+</section>
+
+<!-- CERTS -->
+<section id="certifications">
+<div class="jesko-bg-text">CERTS</div>
+<div class="sw">
+  <div class="rv"><div class="slabel">// 05 — CERTIFICATIONS</div><h2 class="stitle">Credentials</h2></div>
+  <div class="chi rv d1"><div class="chii">⭐</div><div><div class="cht">NPTEL Elite Certification</div><div class="cho">SOCIAL NETWORKS — IIT MADRAS</div><div class="chy">Indian Institute of Technology, Madras · 2025</div></div></div>
+  <div class="cg rv d2">
+    <div class="cert"><div class="cico">🤖</div><div class="cn2">AI Tools &amp; ChatGPT Workshop</div><div class="co">BE10X</div><div class="cy">2025</div></div>
+    <div class="cert"><div class="cico">🎙️</div><div class="cn2">Communication Mentor</div><div class="co">IEEE SB STB15123, TMU</div><div class="cy">2024</div></div>
+    <div class="cert"><div class="cico">💡</div><div class="cn2">Prompt Engineering</div><div class="co">MIND LABS</div><div class="cy">2023</div></div>
+    <div class="cert"><div class="cico">🧠</div><div class="cn2">Artificial Intelligence</div><div class="co">MIND LABS</div><div class="cy">2023</div></div>
+    <div class="cert"><div class="cico">📊</div><div class="cn2">Digital Marketing</div><div class="co">GOOGLE</div><div class="cy">2023</div></div>
+    <div class="cert"><div class="cico">📸</div><div class="cn2">Social Media Creation</div><div class="co">INSTAGRAM</div><div class="cy">2022</div></div>
+    <div class="cert"><div class="cico">✍️</div><div class="cn2">Content Writing &amp; E-Book</div><div class="co">MIND LABS</div><div class="cy">2022</div></div>
+    <div class="cert"><div class="cico">📈</div><div class="cn2">Excel Introduction</div><div class="co">COURSERA</div><div class="cy">2021</div></div>
+    <div class="cert"><div class="cico">🌐</div><div class="cn2">HTML/CSS Basics</div><div class="co">OPEN WEAVER</div><div class="cy">2021</div></div>
+  </div>
+</div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+<div class="sw">
+  <div class="rv"><div class="slabel">// 06 — EDUCATION</div><h2 class="stitle">Academic Background</h2></div>
+  <div class="eg">
+    <div class="ec rv d1"><div class="ei">🎓</div><div class="edg">Bachelor of Computer Applications (BCA)</div><div class="esc">Teerthanker Mahaveer University, Moradabad</div><div class="eyr">2023 — 2026 (Expected)</div></div>
+    <div class="ec rv d2"><div class="ei">📚</div><div class="edg">12th — CBSE</div><div class="esc">Bonne Anne Public School, Moradabad</div><div class="eyr">2023</div></div>
+    <div class="ec rv d3"><div class="ei">📖</div><div class="edg">10th — CBSE</div><div class="esc">Bonne Anne Public School, Moradabad</div><div class="eyr">2021</div></div>
+  </div>
+</div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+<div class="jesko-bg-text">CONTACT</div>
+<div class="sw">
+  <div class="cgrid">
+    <div class="rv">
+      <div class="slabel">// 07 — CONTACT</div>
+      <h2 class="ctag">Let's Build<br><span>Something.</span></h2>
+      <p class="csub">Open to Android dev roles, AI projects, freelance work, and internships. Based in Moradabad — available remotely.</p>
+      <div class="cls">
+        <a href="mailto:hashmiumar11161@gmail.com" class="cl"><span class="cli">✉️</span><div><div class="cll">Email</div><div class="clv">hashmiumar11161@gmail.com</div></div></a>
+        <a href="https://github.com/umarhashmi-7" target="_blank" class="cl"><span class="cli">💻</span><div><div class="cll">GitHub</div><div class="clv">github.com/umarhashmi-7</div></div></a>
+        <a href="tel:+919012728789" class="cl"><span class="cli">📞</span><div><div class="cll">Phone</div><div class="clv">+91-9012728789</div></div></a>
+        <a href="https://umarhashmi.netlify.app" target="_blank" class="cl"><span class="cli">🌐</span><div><div class="cll">Portfolio</div><div class="clv">umarhashmi.netlify.app</div></div></a>
+        <div class="cl"><span class="cli">📍</span><div><div class="cll">Location</div><div class="clv">Moradabad, Uttar Pradesh, India</div></div></div>
+      </div>
+      <div style="margin-top:20px;">
+        <a href="data:application/pdf;base64,JVBERi0xLjQKJZOMi54gUmVwb3J0TGFiIEdlbmVyYXRlZCBQREYgZG9jdW1lbnQgKG9wZW5zb3VyY2UpCjEgMCBvYmoKPDwKL0YxIDIgMCBSIC9GMiAzIDAgUiAvRjMgNCAwIFIKPj4KZW5kb2JqCjIgMCBvYmoKPDwKL0Jhc2VGb250IC9IZWx2ZXRpY2EgL0VuY29kaW5nIC9XaW5BbnNpRW5jb2RpbmcgL05hbWUgL0YxIC9TdWJ0eXBlIC9UeXBlMSAvVHlwZSAvRm9udAo+PgplbmRvYmoKMyAwIG9iago8PAovQmFzZUZvbnQgL0hlbHZldGljYS1Cb2xkIC9FbmNvZGluZyAvV2luQW5zaUVuY29kaW5nIC9OYW1lIC9GMiAvU3VidHlwZSAvVHlwZTEgL1R5cGUgL0ZvbnQKPj4KZW5kb2JqCjQgMCBvYmoKPDwKL0Jhc2VGb250IC9IZWx2ZXRpY2EtT2JsaXF1ZSAvRW5jb2RpbmcgL1dpbkFuc2lFbmNvZGluZyAvTmFtZSAvRjMgL1N1YnR5cGUgL1R5cGUxIC9UeXBlIC9Gb250Cj4+CmVuZG9iago1IDAgb2JqCjw8Ci9Db250ZW50cyAxMCAwIFIgL01lZGlhQm94IFsgMCAwIDU5NS4yNzU2IDg0MS44ODk4IF0gL1BhcmVudCA5IDAgUiAvUmVzb3VyY2VzIDw8Ci9Gb250IDEgMCBSIC9Qcm9jU2V0IFsgL1BERiAvVGV4dCAvSW1hZ2VCIC9JbWFnZUMgL0ltYWdlSSBdCj4+IC9Sb3RhdGUgMCAvVHJhbnMgPDwKCj4+IAogIC9UeXBlIC9QYWdlCj4+CmVuZG9iago2IDAgb2JqCjw8Ci9Db250ZW50cyAxMSAwIFIgL01lZGlhQm94IFsgMCAwIDU5NS4yNzU2IDg0MS44ODk4IF0gL1BhcmVudCA5IDAgUiAvUmVzb3VyY2VzIDw8Ci9Gb250IDEgMCBSIC9Qcm9jU2V0IFsgL1BERiAvVGV4dCAvSW1hZ2VCIC9JbWFnZUMgL0ltYWdlSSBdCj4+IC9Sb3RhdGUgMCAvVHJhbnMgPDwKCj4+IAogIC9UeXBlIC9QYWdlCj4+CmVuZG9iago3IDAgb2JqCjw8Ci9QYWdlTW9kZSAvVXNlTm9uZSAvUGFnZXMgOSAwIFIgL1R5cGUgL0NhdGFsb2cKPj4KZW5kb2JqCjggMCBvYmoKPDwKL0F1dGhvciAoTW9oZCBVbWFyIEhhc2htaSkgL0NyZWF0aW9uRGF0ZSAoRDoyMDI2MDMyMjIyMTc0NSswMCcwMCcpIC9DcmVhdG9yIChcKHVuc3BlY2lmaWVkXCkpIC9LZXl3b3JkcyAoKSAvTW9kRGF0ZSAoRDoyMDI2MDMyMjIyMTc0NSswMCcwMCcpIC9Qcm9kdWNlciAoUmVwb3J0TGFiIFBERiBMaWJyYXJ5IC0gXChvcGVuc291cmNlXCkpIAogIC9TdWJqZWN0IChcKHVuc3BlY2lmaWVkXCkpIC9UaXRsZSAoTW9oZCBVbWFyIEhhc2htaSAtIFJlc3VtZSkgL1RyYXBwZWQgL0ZhbHNlCj4+CmVuZG9iago5IDAgb2JqCjw8Ci9Db3VudCAyIC9LaWRzIFsgNSAwIFIgNiAwIFIgXSAvVHlwZSAvUGFnZXMKPj4KZW5kb2JqCjEwIDAgb2JqCjw8Ci9GaWx0ZXIgWyAvQVNDSUk4NURlY29kZSAvRmxhdGVEZWNvZGUgXSAvTGVuZ3RoIDMyNjkKPj4Kc3RyZWFtCkdhdWBWPkJlZjIoNE9UNWZNPmRwTCxjblNrMzo2RyxkYFpbUio8Y1cua2NjMzVjcTouZmtzVTJsQW4vNlo0U0VLNlgvOS5YPGNHXVYxJj05XClnXyJpalliNS1PWUdgJzAqVjJecDdCKCJqOGMuUWpmWlEzVmhqVkMxX2RDQEc2YFs2ZjpJaCc6OVAhTFZubDJqJlo1OCk3YyVKSm1pcF9JS0Q1Y18pM2dYJTUsMCsvU3FYY1xWNy5EWVQxdEMiNHRRXzhJRCQ5bUleWTxPKloiaGgyQUksS0BfZ1EhMGM8dUZFOExcb2NDa2xNPDxKQ2RDL2NbIWxIZyIvI18oKVBSTEc6OT9DXzNTZj0oVShpSnJzb0EuNFM7Ji88ZW5sMFJvXz9LbSsxVlRYZD85ckswSz1uITk1dFdjZiRfMjpOYiJGXTFbKC51cSpdJypJXVZPVTUnakAvJjB0c0JCJz05Py4+RmxyNUArXkhgTllTNDs+RidGQFlJOmhCVSY2bE0/NitYXChucCVaLnFBVCM9ZjdCcmZtdC5KQD4pTUM4TU9TVkMtZE1hPWhhUjRmbi1IUDhHRTgsalA+LjthRCUnSWwnIkUhOSxuZGc1dVI4RWRPcz05XTRkN2kmWnQ2WU5hTDJfTmY2ZyNCcWBuR0VSTlUqSTFFZyIzbSNuaiRaSkpWWWpLZlJNW1xVWSlkJVtKQC03WVdubGxhbiV0bSozW05UQjptNzlsb2Bjbm5ZckFZa1JoWGxPNmhpQkllczFQX1xJUF5iXUsySmUqI2BpZytoX0pGJURlUy0jO05ZLi8pKXRLYSYsVDdPU0lfXkYjRWt1PyxNNSUlNS1vOWk7M2UmdS5GM1NFI0E1Y1stUFJVUFFESC4pV0ZxKUs+OyMkVjtYaCVjOHFxQ0FbUDJXVXIqMSgiVEQzTT42WTE2ZEBPRTVQP09lRkpeNlpBNSYlM0pZSlNDQlxWYVdwLS5PRTk9O0Q+TSsuN2YnZCNaRnUtN0JEZVliJkphJjU7NCg/OyVGXTZTLUosRi9qJ2Mvbjw8dSxRS0w0NixRMyIzR0J1J1RfKnJVSyxNazcuZSs1N0ItX0kpck9xS1JHVE8jJzxLJCRtISVXN2VIWjpONTMxMXQ6N0t1QXIwV0A3IyooMG08KyJNQlhnQVBYdXBSIkBiWWROcnMlSzFzXTFWL18jInIvTyM0T3NTKD4pSDAzTkc4YF0yRi5UImBUNFZWIitmVS0mOFgzOWArPTZbL2w0WVZHSkwzRHMlSDApWissYC1kX05aO3NBIzdtSVktRyg1WEppQjRrLkZPQV9YNnMjOm80WHFvQ3BlbCpFJmBWZyQkMj9uWUQ1YiI7ZXRoV0A2R2FkMWRXX0s+QFtbLFNkLT1AVEJZR0xYdWFjL2gtWFBfbUItJDJYN2BnJGYrbyhaKSNLSGglZEpaLGVedE4pPURvPGRbQkVzZ0ghKFhtPDJQMC1vPVdva0xWWUZGLDo6biMvYW1JWkBsTnEpWVFzVyJWNF0tXUVtPDZEUWJeNzRock5cYWw3bzI1Y1EuSSRuWWAxMiQyTlRpUkUkOTptaDYqQF1Jc25tMWsxK2YqLGY+NHA5ZSpob1FfMFFNSS0mQDJUbC4vU09yXnJyUC4vNClaZGU2OVAsRmAjRSsrUWg8UGNmTSJkLmhMLUNMQERJbSNqNlpYWklEaCtgYlBAU2xEIWAnaXBQZy45Zy1aSzZtbDZWV2JjU0E4J0MiZD1OKFppV1kmUi1KPWcnPTxCQ11xazBMPSNvcihVYztjNE9Ya3E3QCQwVHE7K0BAMFhKXEUmPCMuNm89LEU/XGdUYlAyZT9tWChVOzo7WGMrY0A1TWxxNUcmVT86Q2hfUlpNZXN1cnE6TiZJQUxxY0FrVlVrLUEwVGUuPWc5IiErU0ZYVjJpL181RywzTkBXPWFwNnFQUyZuWT9Pb0ZNVyFQT0pTakwzNnFyQU8iWWciT190Vk5RV1FFL09zSGtubUVQbSQlNV4yaFNkSk1rbGkxS2E3NUZSRCJhVmcsKlJgKUltSHJnblsoaTJrTDBiXEFqNEw/aytcaS9FUUBLUW0yNzI9OTk3L1VVJl5LTWFWNHEpRF0nSDRbYDtObidvK2JONykmQUpHSlI8ZiNDNCRgNW08JEw0KFc3JG1gPTxAN2ltLml0NHRIMXU5VElKXmZuIlhkMFo2LVYhRGJHaSMsRSNNUikxQTFIWVlUV21bRzApYzFTYSNOOXQwYlZxSnVyZ1M5IW41RSksQyVSOWNuXjxnWFdbU283WSVkVCRicSMqREdHSmN0KG9CbHE7OVw/c0tTWzdSJXFbZkM/SHMvbDdPXyVcY0xMc1EyRi5KOz43XzgiJlY/Lz1cSzJsX3M0IyFIWyNkPW0jPUM0ci5XNyt0NVMxY1JpUDRZXCM3c0tmaVNHPDVSNW9EMzhHa1tYTSsrcWI8cUFRVElQZGF1J05iPmU5Z0NcXS9nXSUkMEo+MkdCXj5dKDhVMj5bZm9hZTRCRmhAW0stKWk2STItSW8oR2JeLGdBO2FQU0ZOLyoiXlQmV29qbXFDJ0lPK01pIjQ3T2Q/NTU/LDhVTT0zN2J0PXBgWipaY0A6LyZRNW5bQSVEUyZpTyQ+VztITkV1Oz9tPjUjTF10KkI4RFJ0MG1jaHRlM2w0UjxkRnBHQjBRMGJnQklcPlU6MnRWWScvWUdcXTxAPi5aWC5GTihrYzA7R3JdUCUwQltgcWgyVGRhalFTOiNDLSFtRV1NUzkkNy1SLkBwZnVPMyFhTjksKGIpZ0U1MVFOZlBkNlxWMDVAcyN1Nzs6OFo6LFlPYDk9Km9WXSdHZmAyZ25eRyYpY3RRaTlZV0FqX2kqNCFSPnFvSmNJNTFgcHQ0VWleOjtZbUE8IyUyV2srW0ZkLDZtVjtLTy0yR0FDSEpwc0AtZ2NZXTBgcjVtWFxNaFczQ3BUXDhcZjNrIToxbUAnSSc0YkFWImI0ckxkUDxbZ286KmBicCpaaCtPRWFxOGlfKyNYdUlvOFFcJlg2UVZUUyUub2F1cmo3XFNNWkpGUitGMk1TX0MuNVE0OVpQXmZYXiIjYFBYLk9cUjd0dDJQPTRvNzM1bUxRbnUoSXI6Q2JkbjRMMGFmSCdWPSdyViotTjBtSjs9bCJXLXAwV01GQVNRPSI+YCYoVT8tRFBvOVlkJSIwI1MzSyxFTl1gcj5MOE5xQXNhVTcvODpbZ20nSWc/Ky5zQCtGQmtyJiosNUBTYlt1Li5LWGMuZ1pQKnU0YWluNF5kPzRSSWJNJCojU0JpdE9bQ0Y2QCtCSyZKbmwtPmZAQ0lxLUVwPTRsX1hRbSVPLzFdOVxfZSpGLGwsRHMyWkEpPmhgTltgSVxbXWNFM1lvWGVdY0JQbD5UUy5RLS9xdHBYLSNFIWo9WF1SZ0VFQzFHb1MuMCZDIVsnSlJjXT1aZ2M2QlRAdFdZR1JQXW5mXG0lTWFMMXE2SWptKiosITFdNT1kTytJdWpKTktEcyxAcnJDYT1hUkZbJ2FnPFkjW0ptWSFiVERfW0I1Xl50K15NSTdfIkNjTjsnJkVSXyIxWDBjQy0+bmtJbyhUWF8+VVRodGYrS0gkMnMzKjhBMUksU2k7PHJcPSJjb2EzNj1MNGU7J0teQWtRTTxoM2BCXDxHMi1ecjBUU146bz1AdClecFRWcm5yZCVpY0hwRkpOaVkzN0Aka2drIz1ZNjYkTzYzWCk9XzksYW0zLz9VV1l0bT9KT2VOQywkI0EzTllENVs6KlNvb18oKGg2MlVJQmI0XyVNPShKNElGUkFSPUc1OC9UXzssY19JQVluPSU/ZUc0QCtaJjEuRWltRigoW2VXWnBZVDNdQyM3PU5JO0Jzai5rWjhFbCc3KVBUU207YT5VUiNnT0lOO1RvTGxsUWxbR1xvLV5VRHU5M3JnSUBwUXVNMzdyaiNlUEtdL1FGbEJKcSJeK2syWmw+PFZqUDdBPzE3XFEmWV5Sbk5QSiorJC40UyxSNnNjSm8+dTgrOz9gLyFzSTdHYFRbdC0yKipbcj4uOTkyU11GNGxsJmo8SiwnOktPYS5UWU9mczZJZlVCVGdhZk08WydLcCoxb0w9SFtzVTNGQ19CPkJMNVE/ZyRCdTNRSWM/dSZ0VUJuajljalNnKktQSW9eZyVyYXI8W0ksZ1oqU2hCQmJGOVlNL3NJJmpDKjAqW0NKOXBOOzZGSyYlZGQ4Xl5KSlVWSjIvISRHZiNuIUMqVCw3JkQ/W2ZSRGEqOmciWVE1bWRQQCRjakc5X3VvKGRWVVUySUpXcEBSMVcxV0llI2lmRGtJNGJbdGhiNUxiI2ZodX4+ZW5kc3RyZWFtCmVuZG9iagoxMSAwIG9iago8PAovRmlsdGVyIFsgL0FTQ0lJODVEZWNvZGUgL0ZsYXRlRGVjb2RlIF0gL0xlbmd0aCAxOTIyCj4+CnN0cmVhbQpHYiEjXWdOSyZHJ1JlOy9TPlROWE4nay1jcUlWZ2JvckwsRUElRl0zR3U2ZzIyMVFNZVZzV0JmJmJuQnIwbDpVWEdWKjhmO1JYbS1rRyFTMDNrZ1JMNGohZFAraFR1dF5iP3A6Sm1pRlFLR1AyUS1pXWJUbF1JNCpsKSpSMmkvTWonbm9PdXNpR0cqcCkuRDBKZHJJLG4yLUROb1g0OSZfYEJPa3RJRzZHRlRHYGNIaGByR0BcMj9BWlhwJ2tmT2I/WCVTNGdrWytbaUEnbnNnJkNHYjIpRyg2UmA/LjpRQzdSYDFAJUVESWwyJygkRWVULTQmMVRtYCEqYHQ1alheUEplWE1qUDVJZE1QLyhSNmkwRDxMa2FEN0FPbWMkbVstRSJkMjVKV0okKWctIjBAR3I5YjY7K1Yxc0YiRkZlRkspcSFFSEIuJDxCNyMiJmRkLFgzM1NBQU5mM0ZkJTBcTERvQkY0WGEmRVt0IiI6cWwkRSRaLHBZUjZmcEBxUU4vPXVVKFNbVXJaJzAnUDIwMXUlTSoqTEYzTzpXR1Y0TmZGcDdvZmRRZy89XzRqZV0oKURsWGplJFdIZ0JnYDZIOlUwW1hvW0NSUWw1TUgxIiUiNkIpXmdfU0s8PG5nalVQMGx0QEVDVldwVklUTTckKD5GTVkzaVdMWmpvQTM2OnVyKjhUQmZHUlppc3VpLEFCZVRGYU4xak9YbEYwUkl1UzNAUkxObm0tKXUhKit0WU5NJmVRcllMZWU4L0FJblc2OGpTJWwwYFwkRW1Hc1ckS1kxVTxvW0JNakYlLT8xOGw8UGtWOjdQNyRJJCMnaEt1MCtvWzdHOFo9My5PaG9AbD9CQGNMdDNfO2QiaiVRO25ncmxxW2wmNzgnZ2VFcDw+ZVxVMEhlcy8yZkkoUFwqPk5sbCgvTksyNyRWb09ZXjRSRExpK1syNGopJChyWjdPKmZtJmZdL1JlSDdkOm1VMWtiOjNGMDgvX0ktRV9bJiFKT181aW1vRkZnLSQ6MVF0PFU2TCgyJiRGWm4wMkNoTExKXWw0XE8sLzs/PE1qTDFiVm9DIjJ1SG4+TnRRIW0zI11kbWItdT4zRy5MXCJCcm9JRDhWTm8sbzpoWTVhX3RuOGw/Y2QuOTJPYE4iVCFkaDRSXFVaOm5BdV1dXCEjcmpFaFRcT1FpQCNMUWFfYko3RzYzW2IzZ0QmNSxsZk5SJ2lNWm1gOFZXMlc9RmtIZi1AOypzUzVFRl9ZTnFwOiVfVGdpIVUwXSNLSFhwZmUzTzgtRSMpaU1iXkJsY1hEc2FcLF9QKFIuVTZLN3AhKzUwNDNBL0trPyhZUGcoZWdnZWdLLSRFR1YhM0M0X2teVUczTCpgXFZNVS07SVs9Lml1T3JFSyxNX0lPIyZnPm9IdEZWNl5WcUdtVzFuWGonJExkRzczZVhaKy5QRi87QiMnXDtAR1I3SVk+VDBbS3BoT2hZNjhEUmkhRWY3QT1JPTdSYE8tbigmKWdOP0dkLz5BQyNtLydub08wTlUkOSVOW21LbHVGcj1aOmd0ZXI6SHJHNj8nZSNNQiRsWStEKnJWbmwoZTQuZUJVRUgtQC4yVix0KzpKP19VRFhPWSwqTkY+PmotP0lvVjZbYkglS2ZzIUEhL19rWWkkLDJDQWE3O2NXbzZhTCNubkYjTDA0Iy9BdDNuJF9qcFNsSUw1KUlAPTdVcTZvXGIjQzhMYiZAR1c+aipPRFpnWm9ENy5eMT9UPk9ZQWg2aVo9LzwjcUxMXGRVZlRFT3QkMEppUWwmbF9EXUxgWElHISgpJHU6KnVdclkoTWlgIW9OR1gmLFUiUUs8YV1DV2ItcVE7UzcqanI2MTM8bz4+SDBjWk1QZ2JPN1EiRk1mTWloUlVuJElrREpHNGdmaCFCVytSWWkmb2wyVUQ4JGRJRGBMVEtnO1NyOmFuZ1JzRzNfL0opMWVjW1s0TCkpPUsiLTcrRi9VZGxzZGxoSjUvK2ZOKDo3OUpnaCklTVstLW5jTDNcLl0oLGI2QWZdKmVZUWVHWT4tInNuImguXVhiI2I9M0ppKURFL2RDXE5qMUI4Wm5UcWNLXms+W1Y3X3VQNlk9YCE2N3VFU0ZCWkpiL0hXXjhcUyZRS2tpI1VuK2tHSWU+ZyJCJjFuRjZcKzAkZ189anJNZFlRPWpxMjpJc1snb2VFYEtdZm91YjY4IVEncGAhPEtbazpualguNSExPCwnWGJLJCckKF5NOVMiQU50WypnQylRXVcpU0FQPkUuMk9PRmxUPWZsbV9iOVtHayFkQGtsTFUmK1stSDphRDhCcVA6OFRoVkZgMitKbV9BTWcqXFFhR2dZaE45QGlIVXEubmBpLkNuUG5JU0JGKWlYS15EMzlkI0ZdZCNEdF9DUW01dSJBKUFmWzovOz50VzBFYHEpPDUtNC9nLG9OR2lmSFhvJjJqUSwnODIuNlkxSS9QOzVMQVw2QGRIPiE+aFAmPFs9QmgpY1ssUlhNWFNVaSZrM2VkK19WaEdfYVwzaUtbJzEzYjctJCJ1dURoJVllb3F+PmVuZHN0cmVhbQplbmRvYmoKeHJlZgowIDEyCjAwMDAwMDAwMDAgNjU1MzUgZiAKMDAwMDAwMDA2MSAwMDAwMCBuIAowMDAwMDAwMTEyIDAwMDAwIG4gCjAwMDAwMDAyMTkgMDAwMDAgbiAKMDAwMDAwMDMzMSAwMDAwMCBuIAowMDAwMDAwNDQ2IDAwMDAwIG4gCjAwMDAwMDA2NTAgMDAwMDAgbiAKMDAwMDAwMDg1NCAwMDAwMCBuIAowMDAwMDAwOTIyIDAwMDAwIG4gCjAwMDAwMDEyMTcgMDAwMDAgbiAKMDAwMDAwMTI4MiAwMDAwMCBuIAowMDAwMDA0NjQzIDAwMDAwIG4gCnRyYWlsZXIKPDwKL0lEIApbPDNlOTliZDA3NzhmMGI3YjIyZDhkMmZjOGM4Yjk4YTg4PjwzZTk5YmQwNzc4ZjBiN2IyMmQ4ZDJmYzhjOGI5OGE4OD5dCiUgUmVwb3J0TGFiIGdlbmVyYXRlZCBQREYgZG9jdW1lbnQgLS0gZGlnZXN0IChvcGVuc291cmNlKQoKL0luZm8gOCAwIFIKL1Jvb3QgNyAwIFIKL1NpemUgMTIKPj4Kc3RhcnR4cmVmCjY2NTcKJSVFT0YK" download="Mohd_Umar_Hashmi_Resume.pdf" class="bp">⬇ Download Resume</a>
+      </div>
+      <div class="vc">👁 Portfolio views: <span id="vcn">—</span></div>
+    </div>
+    <div class="rv d2">
+      <div class="cform">
+        <div class="cft">Send a Message</div>
+        <div class="fg"><label>Name</label><input type="text" id="fn" placeholder="Your name"></div>
+        <div class="fg"><label>Email</label><input type="email" id="fe" placeholder="you@example.com"></div>
+        <div class="fg"><label>Message</label><textarea id="fm" placeholder="Tell me about your project..."></textarea></div>
+        <button class="bp" style="width:100%;justify-content:center;" onclick="sendMsg()">Send Message →</button>
+        <div id="fst"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<div id="ecg"><svg viewBox="0 0 1200 40" preserveAspectRatio="none" fill="none">
+  <polyline points="0,20 60,20 80,20 90,4 100,38 110,4 120,38 130,20 150,20 230,20 250,20 260,4 270,38 280,4 290,38 300,20 320,20 400,20 420,20 430,4 440,38 450,4 460,38 470,20 490,20 570,20 590,20 600,4 610,38 620,4 630,38 640,20 660,20 740,20 760,20 770,4 780,38 790,4 800,38 810,20 830,20 910,20 930,20 940,4 950,38 960,4 970,38 980,20 1000,20 1080,20 1100,20 1110,4 1120,38 1130,4 1140,38 1150,20 1200,20 0,20 60,20 80,20 90,4 100,38 110,4 120,38 130,20 150,20 230,20 250,20 260,4 270,38 280,4 290,38 300,20 320,20 400,20 420,20 430,4 440,38 450,4 460,38 470,20 490,20 570,20 590,20 600,4 610,38 620,4 630,38 640,20 660,20 740,20 760,20 770,4 780,38 790,4 800,38 810,20 830,20 910,20 930,20 940,4 950,38 960,4 970,38 980,20 1000,20 1080,20 1100,20 1110,4 1120,38 1130,4 1140,38 1150,20 1200,20"
+    stroke="currentColor" class="ecg-line" stroke-width="1.5" opacity="0.5"/>
+</svg></div>
+<style>
+  [data-theme="dark"] .ecg-line { color: #C85A1A; }
+  [data-theme="light"] .ecg-line { color: #B84A0E; }
+</style>
+
+<footer>
+  <span class="flogo">UH.</span>
+  <span>© 2025 Mohd Umar Hashmi — Android Developer &amp; AI Integrator</span>
+  <span style="color:var(--a3);">Open to Opportunities 🟢</span>
+</footer>
+
+<!-- Firebase -->
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import{getFirestore,collection,addDoc,doc,getDoc,setDoc,updateDoc,increment,serverTimestamp}from"https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+const fc={apiKey:"AIzaSyC8U_0BhcUt2stgydAaoFTOB3XOj5zu3us",authDomain:"umar-portfolio-7.firebaseapp.com",projectId:"umar-portfolio-7",storageBucket:"umar-portfolio-7.firebasestorage.app",messagingSenderId:"555958611331",appId:"1:555958611331:web:63ac13693b2e02a4399ab6"};
+let db=null;
+try{
+  const app=initializeApp(fc);db=getFirestore(app);
+  const ref=doc(db,"analytics","visitors");
+  try{
+    await updateDoc(ref,{count:increment(1)});
+    const s=await getDoc(ref);
+    if(s.exists()){const el=document.getElementById('vcn');if(el)el.textContent=s.data().count.toLocaleString();}
+  }catch(e){try{await setDoc(ref,{count:1});document.getElementById('vcn').textContent='1';}catch(e2){}}
+}catch(e){}
+window.sendMsg=async function(){
+  const n=document.getElementById('fn').value.trim(),e=document.getElementById('fe').value.trim(),m=document.getElementById('fm').value.trim(),st=document.getElementById('fst');
+  if(!n||!e||!m){st.style.color='#EF5350';st.textContent='> ALL FIELDS REQUIRED.';return;}
+  st.style.color='var(--a1)';st.textContent='> SENDING...';
+  if(db){try{await addDoc(collection(db,"portfolio_messages"),{name:n,email:e,message:m,timestamp:serverTimestamp()});st.style.color='var(--a3)';st.textContent='> SENT. ✓';document.getElementById('fn').value='';document.getElementById('fe').value='';document.getElementById('fm').value='';}catch(err){st.style.color='#EF5350';st.textContent='> ERROR. EMAIL: hashmiumar11161@gmail.com';}}
+  else{setTimeout(()=>{st.style.color='var(--a3)';st.textContent='> EMAIL: hashmiumar11161@gmail.com';},500);}
+};
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+// ─────────────────────────────────────
+// THEME SYSTEM — professional implementation
+// ─────────────────────────────────────
+var currentTheme = localStorage.getItem('uh-theme') || 'dark';
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme', t);
+  localStorage.setItem('uh-theme', t);
+  currentTheme = t;
+  var icon = document.getElementById('theme-icon');
+  var label = document.getElementById('theme-label');
+  if(icon) icon.textContent = t === 'dark' ? '🌙' : '☀️';
+  if(label) label.textContent = t === 'dark' ? 'DARK' : 'LIGHT';
+  if(window._updateShaderTheme) window._updateShaderTheme(t);
+  if(window._updateThreeTheme) window._updateThreeTheme(t);
+}
+window.toggleTheme = function(){
+  applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
+};
+// Apply saved theme immediately
+applyTheme(currentTheme);
+
+// ─────────────────────────────────────
+// CURSOR — GPU transform-based
+// ─────────────────────────────────────
+var dot=document.getElementById('cur-dot');
+var ring=document.getElementById('cur-ring');
+var trail=document.getElementById('cur-trail');
+var mx=window.innerWidth/2, my=window.innerHeight/2;
+var rx=mx, ry=my, trx=mx, tryy=my;
+
+document.addEventListener('mousemove',function(e){
+  mx=e.clientX; my=e.clientY;
+  if(dot) dot.style.transform='translate('+(mx-5)+'px,'+(my-5)+'px)';
+});
+(function cursorLoop(){
+  rx+=(mx-rx)*0.10; ry+=(my-ry)*0.10;
+  trx+=(mx-trx)*0.065; tryy+=(my-tryy)*0.065;
+  if(ring) ring.style.transform='translate('+(rx-19)+'px,'+(ry-19)+'px)';
+  if(trail) trail.style.transform='translate('+(trx-11)+'px,'+(tryy-11)+'px)';
+  requestAnimationFrame(cursorLoop);
+})();
+document.querySelectorAll('a,button,.dom,.cert,.card,.ctr,.tlcard,.cfeat').forEach(function(el){
+  el.addEventListener('mouseenter',function(){document.body.classList.add('cur-hover');});
+  el.addEventListener('mouseleave',function(){document.body.classList.remove('cur-hover');});
+});
+document.addEventListener('mousedown',function(){document.body.classList.add('cur-click');});
+document.addEventListener('mouseup',function(){document.body.classList.remove('cur-click');});
+window.addEventListener('touchstart',function(){
+  if(dot)dot.style.display='none';
+  if(ring)ring.style.display='none';
+  if(trail)trail.style.display='none';
+},{once:true});
+
+// ─────────────────────────────────────
+// LOADER
+// ─────────────────────────────────────
+document.getElementById('loader').addEventListener('animationend',function(){this.style.display='none';});
+setTimeout(function(){var l=document.getElementById('loader');if(l)l.style.display='none';},3200);
+var lp=['INITIALIZING...','LOADING...','UMAR HASHMI'],lpi=0,lci=0,lpel=document.getElementById('ld-phrase');
+function lt(){if(!lpel)return;lpel.textContent=lp[lpi].slice(0,lci)+'_';lci++;
+  if(lci>lp[lpi].length){lci=0;lpi++;if(lpi>=lp.length)return;setTimeout(function(){lpel.textContent='';setTimeout(lt,150);},500);}
+  else setTimeout(lt,65);}
+setTimeout(lt,200);
+
+// ─────────────────────────────────────
+// ROLE TYPEWRITER
+// ─────────────────────────────────────
+var roles=['Android Developer','AI Integrator','Content Creator at Eduvate','Problem Solver'];
+var ri=0,rc=0,rd=false,rEl=document.getElementById('rt');
+function tRole(){if(!rEl)return;
+  if(!rd){rEl.textContent=roles[ri].slice(0,rc+1);rc++;if(rc===roles[ri].length){rd=true;setTimeout(tRole,2000);return;}}
+  else{rEl.textContent=roles[ri].slice(0,rc-1);rc--;if(rc===0){rd=false;ri=(ri+1)%roles.length;}}
+  setTimeout(tRole,rd?34:70);}
+setTimeout(tRole,400);
+
+// ─────────────────────────────────────
+// COUNTERS
+// ─────────────────────────────────────
+function runCtr(id,t,s){
+  var el=document.getElementById(id);if(!el||el.dataset.done)return;
+  el.dataset.done='1';var c=0,step=Math.max(1,Math.ceil(t/55));
+  setInterval(function(){c=Math.min(c+step,t);el.textContent=c+s;},25);
+}
+window.addEventListener('load',function(){setTimeout(function(){runCtr('c1',5,'+');runCtr('c2',10,'+');runCtr('c3',800,'+');runCtr('c4',3,'+');},700);});
+new IntersectionObserver(function(e){e.forEach(function(en){if(en.isIntersecting){runCtr('c1',5,'+');runCtr('c2',10,'+');runCtr('c3',800,'+');runCtr('c4',3,'+');}});},{threshold:0.1}).observe(document.getElementById('about'));
+
+// ─────────────────────────────────────
+// SKILL BARS
+// ─────────────────────────────────────
+var skObs=new IntersectionObserver(function(e){e.forEach(function(en){if(en.isIntersecting)en.target.querySelectorAll('.skf').forEach(function(b){b.style.width=b.dataset.w+'%';});});},{threshold:0.15});
+document.querySelectorAll('.sp').forEach(function(el){skObs.observe(el);});
+setTimeout(function(){document.querySelectorAll('.skf').forEach(function(b){b.style.width=b.dataset.w+'%';});},2200);
+
+// ─────────────────────────────────────
+// REVEALS — always visible, animate for off-screen only
+// ─────────────────────────────────────
+document.querySelectorAll('.rv,.ze,.wr').forEach(function(el){
+  if(el.getBoundingClientRect().top > window.innerHeight * 1.1) el.classList.add('anim');
+});
+var rvObs=new IntersectionObserver(function(e){e.forEach(function(en){
+  if(en.isIntersecting){en.target.classList.add('in');en.target.classList.remove('anim');}
+});},{threshold:0.04,rootMargin:'0px 0px -10px 0px'});
+document.querySelectorAll('.rv,.ze').forEach(function(el){rvObs.observe(el);});
+var wrObs=new IntersectionObserver(function(e){e.forEach(function(en){if(en.isIntersecting)en.target.classList.add('on');});},{threshold:0.2});
+document.querySelectorAll('.wr').forEach(function(el){wrObs.observe(el);});
+// Absolute failsafe
+setTimeout(function(){
+  document.querySelectorAll('.rv,.ze,.wr').forEach(function(el){
+    el.classList.remove('anim');el.classList.add('in','on');
+    el.style.opacity='1';el.style.transform='none';
+  });
+},2000);
+
+// ─────────────────────────────────────
+// SCROLL EFFECTS (Jesko Jets)
+// ─────────────────────────────────────
+var secIds=['hero','about','projects','skills','experience','certifications','contact'];
+var sdots=document.querySelectorAll('.sd');
+sdots.forEach(function(d,i){d.addEventListener('click',function(){var el=document.getElementById(secIds[i]);if(el)el.scrollIntoView({behavior:'smooth'});});});
+var lastSc=0,navEl=document.getElementById('nav');
+if(navEl) navEl.style.transition='transform .4s cubic-bezier(.16,1,.3,1), background .3s, border-color .3s';
+
+function onScroll(){
+  var s=window.pageYOffset||0, h=document.documentElement.scrollHeight-window.innerHeight;
+  var pb=document.getElementById('pb');if(pb)pb.style.width=(s/h*100)+'%';
+  if(navEl){
+    navEl.style.transform=(s>lastSc&&s>200)?'translateY(-100%)':'translateY(0)';
+    navEl.classList.toggle('scrolled',s>40);
+  }
+  lastSc=s;
+  // Hero zoom
+  var hz=document.getElementById('hzoom'),hero=document.getElementById('hero');
+  if(hz&&hero){var p=Math.min(s/hero.offsetHeight,1);hz.style.transform='scale('+(1+p*0.13)+')';}
+  if(hero){var hp=Math.min(s/window.innerHeight,1);hero.querySelectorAll('.hl,.hr,.scroll-hint').forEach(function(el){el.style.opacity=Math.max(0,1-hp*1.9).toString();el.style.transform='translateY('+(hp*40)+'px)';});}
+  // Parallax bg text
+  document.querySelectorAll('.jesko-bg-text').forEach(function(el){
+    var sec=el.closest('section');if(!sec)return;
+    var rect=sec.getBoundingClientRect(),offset=(window.innerHeight/2-(rect.top+rect.height/2))*0.06;
+    el.style.transform='translateY(calc(-50% + '+offset+'px))';
+  });
+  // Slide text parallax
+  var sw=document.getElementById('slide-wrap'),sl=document.getElementById('slide-l'),sr=document.getElementById('slide-r');
+  if(sw&&sl&&sr){
+    var rect=sw.getBoundingClientRect(),p2=(window.innerHeight/2-(rect.top+rect.height/2))/(window.innerHeight/2);
+    sl.style.transform='translateX('+(p2*-55)+'px)';
+    sr.style.transform='translateX('+(p2*55)+'px)';
+    if(Math.abs(p2)<0.8)sw.classList.add('active');
+  }
+  // Section dots
+  var sc=s+window.innerHeight/2;
+  secIds.forEach(function(id,i){var el=document.getElementById(id);if(!el||!sdots[i])return;
+    if(sc>=el.offsetTop&&sc<el.offsetTop+el.offsetHeight)sdots[i].classList.add('on');
+    else sdots[i].classList.remove('on');
+  });
+  // Word reveals
+  document.querySelectorAll('.wr:not(.on)').forEach(function(el){if(el.getBoundingClientRect().top<window.innerHeight*0.88)el.classList.add('on');});
+}
+window.addEventListener('scroll',onScroll,{passive:true});
+window.addEventListener('load',function(){onScroll();setTimeout(function(){var sw=document.getElementById('slide-wrap');if(sw)sw.classList.add('active');},700);});
+setInterval(onScroll,250);
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(function(a){
+  a.addEventListener('click',function(e){var id=a.getAttribute('href').slice(1),el=document.getElementById(id);if(el){e.preventDefault();el.scrollIntoView({behavior:'smooth'});}});
+});
+
+// ─────────────────────────────────────
+// TILT CARDS
+// ─────────────────────────────────────
+document.querySelectorAll('.card,.ctr,.dom,.cert,.cfeat').forEach(function(card){
+  card.addEventListener('mousemove',function(e){
+    var r=card.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+    card.style.transform='perspective(700px) rotateY('+(x*6)+'deg) rotateX('+(-y*6)+'deg) translateY(-5px)';
+    card.style.borderColor='var(--bdh)';
+  });
+  card.addEventListener('mouseleave',function(){card.style.transform='';card.style.borderColor='';});
+});
+
+// MAGNETIC BUTTONS
+document.querySelectorAll('.bp,.bg2,.nbtn').forEach(function(btn){
+  btn.addEventListener('mousemove',function(e){var r=btn.getBoundingClientRect(),x=(e.clientX-r.left-r.width/2)*.28,y=(e.clientY-r.top-r.height/2)*.28;btn.style.transform='translate('+x+'px,'+y+'px)';});
+  btn.addEventListener('mouseleave',function(){btn.style.transform='';});
+});
+
+// ─────────────────────────────────────
+// SHADER BACKGROUND — Matthias Hurrle nebula
+// Warm amber in dark, barely visible in light
+// ─────────────────────────────────────
+(function(){
+  var canvas=document.getElementById('shader-bg');
+  if(!canvas)return;
+  var gl=canvas.getContext('webgl2');if(!gl)return;
+  var vs=gl.createShader(gl.VERTEX_SHADER);
+  gl.shaderSource(vs,'#version 300 es
+precision highp float;
+in vec4 position;
+void main(){gl_Position=position;}');
+  gl.compileShader(vs);
+  var fs=gl.createShader(gl.FRAGMENT_SHADER);
+  var fragSrc='#version 300 es
+precision highp float;
+out vec4 O;
+uniform vec2 resolution;
+uniform float time;
+uniform int darkMode;
+#define FC gl_FragCoord.xy
+#define T time
+#define R resolution
+#define MN min(R.x,R.y)
+float rnd(vec2 p){p=fract(p*vec2(12.9898,78.233));p+=dot(p,p+34.56);return fract(p.x*p.y);}
+float noise(in vec2 p){vec2 i=floor(p),f=fract(p),u=f*f*(3.-2.*f);return mix(mix(rnd(i),rnd(i+vec2(1,0)),u.x),mix(rnd(i+vec2(0,1)),rnd(i+1.),u.x),u.y);}
+float fbm(vec2 p){float t=.0,a=1.;mat2 m=mat2(1.,-.5,.2,1.2);for(int i=0;i<5;i++){t+=a*noise(p);p*=2.*m;a*=.5;}return t;}
+float clouds(vec2 p){float d=1.,t=.0;for(float i=.0;i<3.;i++){float a=d*fbm(i*10.+p.x*.2+.2*(1.+i)*p.y+d+i*i+p);t=mix(t,d,a);d=a;p*=2./(i+1.);}return t;}
+void main(void){
+vec2 uv=(FC-.5*R)/MN,st=uv*vec2(2,1);
+vec3 col=vec3(0);
+float bg=clouds(vec2(st.x+T*.5,-st.y));
+uv*=1.-.3*(sin(T*.2)*.5+.5);
+for(float i=1.;i<12.;i++){
+uv+=.1*cos(i*vec2(.1+.01*i,.8)+i*i+T*.5+.1*uv.x);
+vec2 p=uv;float d=length(p);
+col+=.00125/d*(cos(sin(i)*vec3(1,2,3))+1.);
+float b=noise(i+p+bg*1.731);
+col+=.002*b/length(max(p,vec2(b*p.x*.02,p.y)));
+col=mix(col,vec3(bg*.25,bg*.137,bg*.05),d);
+}
+vec3 warm;
+if(darkMode==1){
+warm=vec3(col.r*1.5+col.g*0.3,col.r*0.55+col.g*0.15,col.b*0.08)*0.58;
+}else{
+warm=vec3(col.r*0.7+0.08,col.r*0.35+0.04,col.b*0.03)*0.12;
+}
+O=vec4(warm,1);
+}';
+  gl.shaderSource(fs,fragSrc);gl.compileShader(fs);
+  var prog=gl.createProgram();gl.attachShader(prog,vs);gl.attachShader(prog,fs);gl.linkProgram(prog);
+  var buf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,1,-1,-1,1,1,1,-1]),gl.STATIC_DRAW);
+  var pos=gl.getAttribLocation(prog,'position');gl.enableVertexAttribArray(pos);gl.vertexAttribPointer(pos,2,gl.FLOAT,false,0,0);
+  var uRes=gl.getUniformLocation(prog,'resolution'),uTime=gl.getUniformLocation(prog,'time'),uDark=gl.getUniformLocation(prog,'darkMode');
+  function resize(){
+    var dpr=Math.min(window.devicePixelRatio||1,1.5);
+    canvas.width=window.innerWidth*dpr;canvas.height=window.innerHeight*dpr;
+    canvas.style.width=window.innerWidth+'px';canvas.style.height=window.innerHeight+'px';
+    gl.viewport(0,0,canvas.width,canvas.height);
+  }
+  resize();window.addEventListener('resize',resize);
+  var t0=performance.now();
+  var isDark=1;
+  window._updateShaderTheme=function(t){isDark=t==='dark'?1:0;};
+  isDark=currentTheme==='dark'?1:0;
+  function render(){
+    var t=(performance.now()-t0)*0.001;
+    gl.useProgram(prog);
+    gl.uniform2f(uRes,canvas.width,canvas.height);
+    gl.uniform1f(uTime,t);
+    gl.uniform1i(uDark,isDark);
+    gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
+    requestAnimationFrame(render);
+  }
+  render();
+})();
+
+// ─────────────────────────────────────
+// THREE.JS — amber particles
+// ─────────────────────────────────────
+try{
+  var mob=window.innerWidth<700;
+  var c=document.getElementById('bgc');
+  var r3=new THREE.WebGLRenderer({canvas:c,alpha:true,antialias:!mob,premultipliedAlpha:false});
+  r3.setClearColor(0x000000,0);
+  r3.setSize(window.innerWidth,window.innerHeight);
+  r3.setPixelRatio(Math.min(window.devicePixelRatio||1,mob?1.5:2));
+  var scene=new THREE.Scene();
+  var cam=new THREE.PerspectiveCamera(70,window.innerWidth/window.innerHeight,0.1,1000);
+  cam.position.z=55;
+  var sc=mob?180:500,sg=new THREE.BufferGeometry();
+  var sp=new Float32Array(sc*3),scol=new Float32Array(sc*3);
+  for(var i=0;i<sc;i++){
+    sp[i*3]=(Math.random()-.5)*260;sp[i*3+1]=(Math.random()-.5)*260;sp[i*3+2]=(Math.random()-.5)*260;
+    var rnd=Math.random();
+    if(rnd>.85){scol[i*3]=1.0;scol[i*3+1]=0.8;scol[i*3+2]=0.25;}
+    else if(rnd>.7){scol[i*3]=0.85;scol[i*3+1]=0.42;scol[i*3+2]=0.12;}
+    else{scol[i*3]=0.95;scol[i*3+1]=0.62;scol[i*3+2]=0.28;}
+  }
+  sg.setAttribute('position',new THREE.BufferAttribute(sp,3));
+  sg.setAttribute('color',new THREE.BufferAttribute(scol,3));
+  var starMat=new THREE.PointsMaterial({vertexColors:true,size:.35,sizeAttenuation:true,transparent:true,opacity:.65});
+  var stars=new THREE.Points(sg,starMat);scene.add(stars);
+  var wm3=function(g,col,op){return new THREE.Mesh(g,new THREE.MeshBasicMaterial({color:col,wireframe:true,transparent:true,opacity:op}));};
+  var ico=wm3(new THREE.IcosahedronGeometry(13,1),0xE8923A,.16);ico.position.set(28,2,-18);scene.add(ico);
+  var icoO=wm3(new THREE.IcosahedronGeometry(15,1),0xE8923A,.04);icoO.position.set(28,2,-18);scene.add(icoO);
+  var tor=wm3(new THREE.TorusGeometry(7,.22,14,70),0xC85A1A,.2);tor.position.set(-36,16,-26);tor.rotation.x=.8;scene.add(tor);
+  var oct=wm3(new THREE.OctahedronGeometry(5,0),0xF5C040,.14);oct.position.set(-18,-20,-14);scene.add(oct);
+  var tx=0,ty=0;
+  document.addEventListener('mousemove',function(e){tx=(e.clientX/window.innerWidth-.5)*7;ty=-(e.clientY/window.innerHeight-.5)*7;});
+  if(window.DeviceOrientationEvent)window.addEventListener('deviceorientation',function(e){tx=(e.gamma||0)/22;ty=-(e.beta||0)/42;});
+  window.addEventListener('resize',function(){r3.setSize(window.innerWidth,window.innerHeight);cam.aspect=window.innerWidth/window.innerHeight;cam.updateProjectionMatrix();});
+  window._updateThreeTheme=function(t){starMat.opacity=t==='dark'?.65:.18;};
+  window._updateThreeTheme(currentTheme);
+  (function a3(){
+    requestAnimationFrame(a3);
+    ico.rotation.x+=.004;ico.rotation.y+=.006;
+    icoO.rotation.x+=.003;icoO.rotation.y+=.005;
+    tor.rotation.y+=.01;tor.rotation.z+=.007;
+    oct.rotation.x+=.012;oct.rotation.y+=.009;
+    stars.rotation.y+=.0003;
+    cam.position.x+=(tx-cam.position.x)*.025;
+    cam.position.y+=(ty-cam.position.y)*.025;
+    cam.lookAt(scene.position);r3.render(scene,cam);
+  })();
+}catch(e){}
+
+})(); // end IIFE
+</script>
+</body>
+</html>
